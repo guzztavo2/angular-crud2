@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+html,body{
+  height: 100%;
+}
+
+.cursor-pointer{
+  cursor:pointer;
+}
+
+.select-none{
+  user-select: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+input,textarea{
+  border:0;
+  outline:0;
+}
+input:focus,textarea:focus{
+  outline:1px solid black;
+}

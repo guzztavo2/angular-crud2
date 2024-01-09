@@ -1,0 +1,158 @@
+<div *ngIf="modalVisible" class="modal_v2 p-4 {{ this.backDropVisibleClass }}">
+  <div
+    class="container p-2 bg-light rounded shadow w-100 h-auto {{
+      this.modalVisibleClass
+    }}"
+  >
+    <header
+      class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2"
+    >
+      <h1 class="m-0 p-0 fw-light fs-4">{{ title }}</h1>
+      <h1
+        class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4"
+        (click)="this.setModalVisibility(true)"
+      >
+        X
+      </h1>
+    </header>
+    <section
+      class="w-100 d-flex flex-row align-items-center justify-content-between my-2 p-2 text-center"
+    >
+      <p class="d-block w-100">{{ description }}</p>
+    </section>
+    <footer class="border-top p-2">
+      <button class="fs-5 btn btn-primary">Ok, entendi!</button>
+    </footer>
+  </div>
+</div>
+
+<style>
+  div.container {
+    max-width: 40%;
+  }
+  div.modal_v2 {
+    background-color: rgba(0, 0, 0, 0.459);
+    width: 100% !important;
+    height: 100% !important;
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 9099;
+  }
+
+  .close-modal {
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+  }
+
+  header h1.close-modal:hover {
+    background-color: red;
+    color: white !important;
+  }
+  .fade-in-top {
+    -webkit-animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+
+  @-webkit-keyframes fade-in-top {
+    0% {
+      -webkit-transform: translateY(-50px);
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-top {
+    0% {
+      -webkit-transform: translateY(-50px);
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .fade-in {
+    -webkit-animation: fade-in 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    animation: fade-in 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+
+  @-webkit-keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .fade-out-top {
+    -webkit-animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  @-webkit-keyframes fade-out-top {
+    0% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateY(-50px);
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out-top {
+    0% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateY(-50px);
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+  }
+
+  .fade-out {
+    -webkit-animation: fade-out 1s ease-out both;
+    animation: fade-out 1s ease-out both;
+  }
+
+  @-webkit-keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+</style>
