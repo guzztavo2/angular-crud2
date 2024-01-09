@@ -12,7 +12,9 @@ export class ModalComponent implements OnInit {
   @Input() modalVisible: boolean = false;
   @Input() title: String = '';
   @Input() description: String = '';
-
+  @Input() showFooter: Boolean = true;
+  @Input() canClose: Boolean = true;
+  @Input() loadingModal: boolean = true;
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
 
@@ -22,7 +24,11 @@ export class ModalComponent implements OnInit {
   }
   clickEvent() {
     window.addEventListener('click', (e) => {
-      if ((e.target as HTMLObjectElement).classList.contains('modal_v2')) {
+      if (
+        ((e.target as HTMLObjectElement).classList.contains('modal_v2') ||
+          (e.target as HTMLObjectElement).classList.contains('close-modal')) &&
+        this.canClose
+      ) {
         this.setModalVisibility(true);
       }
     });

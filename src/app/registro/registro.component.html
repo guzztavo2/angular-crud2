@@ -2,11 +2,20 @@
   class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center"
 >
   <app-modal
-    [modalVisible]="false"
-    [title]="'Olá mundo'"
+    *ngIf="successModal"
+    [modalVisible]="!successModal"
+    [title]="'Seja bem vindo! Seu registro foi concluído com sucesso 😉'"
     [description]="
       'Enim voluptate commodo ut mollit sit elit veniam ea veniam sunt aute non ipsum deserunt.'
     "
+    [canClose]="true"
+  ></app-modal>
+  <app-modal
+    *ngIf="loadingModal"
+    [modalVisible]="!loadingModal"
+    [showFooter]="false"
+    [canClose]="false"
+    [title]="'Sua requisição está sendo carregada! ⏳'"
   ></app-modal>
 
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">Registro</h1>
@@ -16,10 +25,16 @@
       Seja bem vindo,
       <span class="fw-normal text-lowercase">registre seu usuário aqui:</span>
     </h1>
-    <form [formGroup]="registerForm" action="" class="w-100 d-flex flex-column">
+    <form
+      (ngSubmit)="submitForm()"
+      [formGroup]="registerForm"
+      action=""
+      class="w-100 d-flex flex-column"
+    >
       <label for="name" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Nome *</p>
         <input
+          value=""
           type="text"
           formControlName="name"
           id="name"
@@ -44,6 +59,7 @@
       <label for="email" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">E-mail *</p>
         <input
+          value=""
           type="text"
           formControlName="email"
           id="email"
@@ -68,6 +84,7 @@
       <label for="password" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Senha *</p>
         <input
+          value=""
           type="password"
           formControlName="password"
           id="password"
@@ -84,9 +101,11 @@
           <div *ngIf="this.registerForm.get('password')?.errors?.['required']">
             O campo senha é um requisito.
           </div>
-          <div *ngIf="this.registerForm.get('password')?.errors?.['pattern']">
-            O campo senha é necessário ter uma letra maiuscula e ao menos um
-            número.
+          <div
+            *ngIf="this.registerForm.get('password')?.errors?.['pattern'] || this.registerForm.get('password')?.errors?.['minlength']"
+          >
+            O campo senha é necessário ter: uma letra minúscula, uma letra
+            maiuscula e ao menos um número e 5 caracteres.
           </div>
         </div>
       </label>
@@ -97,6 +116,7 @@
       >
         <p class="fs-6 fw-bolder m-0">Confirme a senha *</p>
         <input
+          value=""
           type="password"
           formControlName="confirmPassword"
           id="confirmPassword"
@@ -126,6 +146,7 @@
         </div>
       </label>
       <input
+        value=""
         class="btn btn-primary p-1 text-light my-2"
         type="submit"
         value="Registrar"
