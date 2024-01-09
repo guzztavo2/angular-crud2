@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   FormControl,
@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal/modal.component';
-
+import { Modal } from '../modal/modal';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -16,10 +18,24 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
 })
-export class RegistroComponent implements OnInit {
-  public successModal = false;
-  public loadingModal = false;
-  public loadingModalComponent: any;
+export class RegistroComponent {
+  // public successModal: Modal;
+  public loadingModal: Modal = {
+    title: 'Sua requisição está sendo carregada! ⏳',
+    description: '',
+    canClose: false,
+    showFooter: false,
+    visibility: false,
+    display: false,
+    loadingIcon: true,
+  };
+  private authService: AuthService;
+  private router: Router;
+
+  constructor(authService: AuthService, router: Router) {
+    this.authService = authService;
+    this.router = router;
+  }
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -43,14 +59,9 @@ export class RegistroComponent implements OnInit {
   submitForm() {
     console.log(this);
     console.log(this.registerForm);
-    alert('a');
-  }
-
-  ngOnInit(): void {
-    this.loadingModal = true;
-    console.log(this.loadingModalComponent);
-    setTimeout(() => {
-      this.loadingModal = false;
-    }, 1000);
+    this.loadingModal.display = true;
+    this.loadingModal.visibility = true;
+    this.authService.isLoggedIn = true;
+    this.router.navigateByUrl('/');
   }
 }

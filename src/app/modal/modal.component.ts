@@ -10,18 +10,19 @@ import { CommonModule } from '@angular/common';
 })
 export class ModalComponent implements OnInit {
   @Input() modalVisible: boolean = false;
-  @Input() title: String = '';
-  @Input() description: String = '';
-  @Input() showFooter: Boolean = true;
-  @Input() canClose: Boolean = true;
-  @Input() loadingModal: boolean = true;
+  @Input() title: string = '';
+  @Input() description: string = '';
+  @Input() showFooter: boolean = true;
+  @Input() canClose: boolean = true;
+  @Input() loading: boolean = true;
+
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
 
   ngOnInit(): void {
-    this.setModalVisibility(this.modalVisible);
     this.clickEvent();
   }
+
   clickEvent() {
     window.addEventListener('click', (e) => {
       if (
@@ -46,6 +47,12 @@ export class ModalComponent implements OnInit {
       setTimeout(() => {
         this.modalVisible = false;
       }, 300);
+    }
+  }
+
+  ngOnChanges(val: any) {
+    if (val.modalVisible !== undefined) {
+      this.setModalVisibility(val.modalVisible.currentValue);
     }
   }
 }
