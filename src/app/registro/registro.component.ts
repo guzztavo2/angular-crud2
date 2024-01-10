@@ -11,6 +11,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { Modal } from '../modal/modal';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import User from '../auth/user';
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -61,7 +62,14 @@ export class RegistroComponent {
     console.log(this.registerForm);
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
-    this.authService.isLoggedIn = true;
+
+    this.authService.register(
+      new User(
+        this.registerForm.get('name')?.value as string,
+        this.registerForm.get('email')?.value as string,
+        this.registerForm.get('password')?.value as string
+      )
+    );
     this.router.navigateByUrl('/');
   }
 }

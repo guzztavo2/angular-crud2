@@ -6,8 +6,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { RegistroComponent } from './registro/registro.component';
 
 export const routes: Routes = [
-  {"path":"", "component": HomeComponent, canActivate: [authGuard]},
-  { "path": "login", "component": LoginComponent },
-  { "path": "registro", "component": RegistroComponent },
-  {"path": '**', component: PageNotFoundComponent}
+  { path: '', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent, canDeactivate: [authGuard] },
+  { path: 'registro', component: RegistroComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
