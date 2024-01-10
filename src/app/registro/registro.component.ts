@@ -63,13 +63,13 @@ export class RegistroComponent {
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
 
-    this.authService.register(
+    User.setUser(
       new User(
         this.registerForm.get('name')?.value as string,
         this.registerForm.get('email')?.value as string,
         this.registerForm.get('password')?.value as string
       )
     );
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
   }
 }
