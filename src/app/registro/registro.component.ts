@@ -36,6 +36,12 @@ export class RegistroComponent {
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
     this.router = router;
+
+    this.authService.login().subscribe((isLoggedIn: boolean) => {
+      if (isLoggedIn) {
+        this.router.navigateByUrl('/');
+      }
+    });
   }
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -62,14 +68,13 @@ export class RegistroComponent {
     console.log(this.registerForm);
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
-
-    User.setUser(
-      new User(
-        this.registerForm.get('name')?.value as string,
-        this.registerForm.get('email')?.value as string,
-        this.registerForm.get('password')?.value as string
-      )
+    const user = new User(
+      this.registerForm.get('name')?.value as string,
+      this.registerForm.get('email')?.value as string,
+      this.registerForm.get('password')?.value as string
     );
-    // this.router.navigateByUrl('/');
+    User.setUser(user);
+    User.setActualUser(user);
+    this.router.navigateByUrl('/');
   }
 }

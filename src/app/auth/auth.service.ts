@@ -13,9 +13,11 @@ export class AuthService {
   redirectUrl: string | null = null;
 
   login(): Observable<boolean> {
-    return of(true).pipe(
+    return of(User.getActualUser() == null ? false : true).pipe(
       delay(1000),
-      tap(() => (this.isLoggedIn = true))
+      tap(() => {
+        this.isLoggedIn = User.getActualUser() == null ? false : true;
+      })
     );
   }
 
