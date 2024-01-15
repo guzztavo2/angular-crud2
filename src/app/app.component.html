@@ -24,7 +24,7 @@
           name=""
           id=""
           placeholder="Buscar informações"
-          class="fs-6 p-1 w-100"
+          class="fs-6 p-1 w-100 rounded shadow-sm"
         />
       </form>
 
@@ -42,9 +42,11 @@
           </a>
           <ul class="dropdown-menu">
             <li class="select-none fs-6 text-center mb-2 border-bottom">
-              Usuário 365
+              {{ this.user }}
             </li>
-            <li><a class="dropdown-item text-center" href="#">Sair</a></li>
+            <li>
+              <a class="dropdown-item text-center" href="/logout">Sair</a>
+            </li>
           </ul>
         </div>
       </div>

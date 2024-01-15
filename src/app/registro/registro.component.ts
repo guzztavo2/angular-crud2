@@ -29,14 +29,32 @@ export class RegistroComponent {
     visibility: false,
     display: false,
     loadingIcon: true,
+    redirect: false,
   };
+
+  public messageModal: Modal = {
+    title: 'Tudo certo, você foi registrado! ✔',
+    description: 'Ao clicar em OK, você será redirecionado para o menu!',
+    canClose: true,
+    showFooter: true,
+    visibility: false,
+    display: false,
+    loadingIcon: false,
+    redirect: '/',
+  };
+
   private authService: AuthService;
+
   private router: Router;
 
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
     this.router = router;
 
+    // this.messageModal.display = true;
+    // this.messageModal.visibility = true;
+
+    this.submitForm();
     this.authService.login().subscribe((isLoggedIn: boolean) => {
       if (isLoggedIn) {
         this.router.navigateByUrl('/');
@@ -64,17 +82,29 @@ export class RegistroComponent {
   }
 
   submitForm() {
-    console.log(this);
-    console.log(this.registerForm);
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
-    const user = new User(
-      this.registerForm.get('name')?.value as string,
-      this.registerForm.get('email')?.value as string,
-      this.registerForm.get('password')?.value as string
-    );
-    User.setUser(user);
-    User.setActualUser(user);
-    this.router.navigateByUrl('/');
+
+    new Promise((success) => {
+      setTimeout(() => {
+        this.loadingModal.visibility = false;
+        setTimeout(() => {
+          this.loadingModal.display = false;
+          success(true);
+        }, 500);
+      }, 1000);
+    }).then((_) => {
+      this.messageModal.display = true;
+      this.messageModal.visibility = true;
+
+      const user = new User(
+        this.registerForm.get('name')?.value as string,
+        this.registerForm.get('email')?.value as string,
+        this.registerForm.get('password')?.value as string
+      );
+      User.setUser(user);
+      User.setActualUser(user);
+      this.router.navigateByUrl('/');
+    });
   }
 }

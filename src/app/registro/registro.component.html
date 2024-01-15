@@ -17,6 +17,17 @@
     [canClose]="this.loadingModal.canClose"
     [title]="this.loadingModal.title"
     [description]="this.loadingModal.description"
+    [loading]="this.loadingModal.loadingIcon"
+  ></app-modal>
+  <app-modal
+    *ngIf="this.messageModal.display"
+    [modalVisible]="!this.messageModal.visibility"
+    [showFooter]="this.messageModal.showFooter"
+    [canClose]="this.messageModal.canClose"
+    [title]="this.messageModal.title"
+    [description]="this.messageModal.description"
+    [loading]="this.messageModal.loadingIcon"
+    [redirect]="this.messageModal.redirect"
   ></app-modal>
 
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">Registro</h1>

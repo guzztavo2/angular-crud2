@@ -13,10 +13,14 @@ export class AuthService {
   redirectUrl: string | null = null;
 
   login(): Observable<boolean> {
-    return of(User.getActualUser() == null ? false : true).pipe(
+    const propUser = User.getActualUser();
+    const actualUser = propUser == null ? false : true;
+    return of(actualUser).pipe(
       delay(1000),
       tap(() => {
-        this.isLoggedIn = User.getActualUser() == null ? false : true;
+        if (actualUser !== false)
+          localStorage.setItem('users', (propUser as User).toJson());
+        this.isLoggedIn = actualUser;
       })
     );
   }
@@ -36,7 +40,7 @@ export class AuthService {
 
   register(user: User) {
     this.isLoggedIn = true;
-    localStorage.setItem('users', JSON.stringify(user));
+    localStorage.setItem('users', user.toJson());
   }
 
   logout(): void {

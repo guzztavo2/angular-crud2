@@ -4,6 +4,16 @@ export default class User {
   email: string;
   password: string;
 
+  toString() {}
+
+  toJson(): string {
+    return JSON.stringify({
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      password: this.password,
+    });
+  }
   constructor(
     name: string,
     email: string,

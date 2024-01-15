@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,6 +16,7 @@ export class ModalComponent implements OnInit {
   @Input() showFooter: boolean = true;
   @Input() canClose: boolean = true;
   @Input() loading: boolean = true;
+  @Input() redirect: string | false = false;
 
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
@@ -34,6 +36,12 @@ export class ModalComponent implements OnInit {
       }
     });
   }
+
+  private router: Router;
+  constructor(router: Router) {
+    this.router = router;
+  }
+
   setModalVisibility(modalVisible: boolean) {
     if (!modalVisible) {
       this.modalVisible = true;
@@ -46,6 +54,7 @@ export class ModalComponent implements OnInit {
       this.modalVisibleClass = 'fade-out-top';
       setTimeout(() => {
         this.modalVisible = false;
+        if (this.redirect !== false) this.router.navigateByUrl(this.redirect);
       }, 300);
     }
   }
