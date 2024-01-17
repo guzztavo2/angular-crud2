@@ -1,6 +1,16 @@
 <div
   class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center"
 >
+  <app-modal
+    *ngIf="this.loadingModal.display"
+    [modalVisible]="!this.loadingModal.visibility"
+    [showFooter]="this.loadingModal.showFooter"
+    [canClose]="this.loadingModal.canClose"
+    [title]="this.loadingModal.title"
+    [description]="this.loadingModal.description"
+    [loading]="this.loadingModal.loadingIcon"
+  ></app-modal>
+
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">LOGIN</h1>
   <div class="w-50 border p-2 shadow-sm d-flex flex-column">
     <h1 class="fs-5 fw-bold text-uppercase">
@@ -9,24 +19,53 @@
         >Acesse seu usuário para logar no sistema.</span
       >
     </h1>
-    <form action="" class="w-100 d-flex flex-column">
+    <form
+      (ngSubmit)="submitForm()"
+      [formGroup]="loginForm"
+      action=""
+      class="w-100 d-flex flex-column"
+    >
       <label for="email" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">E-mail</p>
         <input
           type="text"
-          name="email"
+          formControlName="email"
           id="email"
           class="fs-6 p-2 border shadow-sm rounded w-100"
         />
+        <div
+          *ngIf="
+            this.loginForm.get('email') &&
+            (this.loginForm.get('email')?.dirty ||
+              this.loginForm.get('email')?.touched)
+          "
+          class="fs-6 text-danger"
+        >
+          <div *ngIf="this.loginForm.get('email')?.errors?.['required']">
+            O e-mail é um requisito.
+          </div>
+        </div>
       </label>
       <label for="password" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Senha</p>
         <input
           type="password"
-          name="password"
+          formControlName="password"
           id="password"
           class="fs-6 p-2 border shadow-sm rounded w-100"
         />
+        <div
+          *ngIf="
+            this.loginForm.get('password') &&
+            (this.loginForm.get('password')?.dirty ||
+              this.loginForm.get('password')?.touched)
+          "
+          class="fs-6 text-danger"
+        >
+          <div *ngIf="this.loginForm.get('password')?.errors?.['required']">
+            O e-mail é um requisito.
+          </div>
+        </div>
       </label>
       <input
         class="btn btn-primary p-1 text-light my-2"
