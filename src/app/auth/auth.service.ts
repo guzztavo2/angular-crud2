@@ -15,11 +15,13 @@ export class AuthService {
   login(): Observable<boolean> {
     const propUser = User.getActualUser();
     const actualUser = propUser == null ? false : true;
+    console.log(propUser);
+    alert('a');
     return of(actualUser).pipe(
       delay(1000),
       tap(() => {
         if (actualUser !== false)
-          localStorage.setItem('users', (propUser as User).toJson());
+          localStorage.setItem('user', (propUser as User).toJson());
         this.isLoggedIn = actualUser;
       })
     );

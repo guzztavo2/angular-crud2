@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -17,12 +17,13 @@ export class ModalComponent implements OnInit {
   @Input() canClose: boolean = true;
   @Input() loading: boolean = true;
   @Input() redirect: string | false = false;
-
+  @Output() modalVisibleEvent = new EventEmitter<boolean>();
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
 
   ngOnInit(): void {
     this.clickEvent();
+    this.setModalVisibility(this.modalVisible);
   }
 
   clickEvent() {
@@ -43,6 +44,7 @@ export class ModalComponent implements OnInit {
   }
 
   setModalVisibility(modalVisible: boolean) {
+    this.modalVisibleEvent.emit(!modalVisible);
     if (!modalVisible) {
       this.modalVisible = true;
       setTimeout(() => {
@@ -59,9 +61,9 @@ export class ModalComponent implements OnInit {
     }
   }
 
-  ngOnChanges(val: any) {
-    if (val.modalVisible !== undefined) {
-      this.setModalVisibility(val.modalVisible.currentValue);
-    }
-  }
+  // ngOnChanges(val: any) {
+  //   if (val.modalVisible !== undefined) {
+  //     this.setModalVisibility(val.modalVisible.currentValue);
+  //   }
+  // }
 }

@@ -14,9 +14,10 @@ import User from './auth/user';
 })
 export class AppComponent {
   authService: AuthService;
-  user: User | false = false;
+  user!: User;
   constructor(authService: AuthService) {
-    this.user = authService.getUser();
+    const result = User.getActualUser();
+    if (result !== null) this.user = result;
     this.authService = authService;
   }
   title = 'crudAngular';

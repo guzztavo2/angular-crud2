@@ -13,6 +13,7 @@ import {
 import User from '../auth/user';
 import { Modal } from '../modal/modal';
 import { ModalComponent } from '../modal/modal.component';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -45,21 +46,60 @@ export class LoginComponent {
     loadingIcon: true,
     redirect: false,
   };
+  public modalMessage: Modal = {
+    title: 'Sua requisição está sendo carregada! ⏳',
+    description: '',
+    canClose: true,
+    showFooter: true,
+    visibility: false,
+    display: false,
+    loadingIcon: false,
+    redirect: false,
+  };
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
+  visibilityModal(val: boolean) {
+    this.modalMessage.visibility = val;
+
+    setTimeout(() => {
+      this.modalMessage.display = val;
+    }, 500);
+  }
   submitForm() {
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
 
-    new Promise((ex) => {
+    new Promise((success, error) => {
       const user = User.getUserFromUsersList(
         this.loginForm.get('email')?.value as string,
         this.loginForm.get('password')?.value as string
       );
-    });
+      if (user !== null) success(user as User);
+      error('Não foi possível localizar o usuário.');
+    })
+      .then((user: any) => {
+        user = user as User;
+        this.modalMessage.title = 'Sucesso!';
+        this.modalMessage.description = 'Bem vindo de volta, ' + user['name'];
+        this.modalMessage.display = true;
+        this.modalMessage.visibility = true;
+      })
+      .catch((error) => {
+        this.modalMessage.title = error;
+        this.modalMessage.description =
+          'Não será possível acessar o painel de administrador, pois o usuário não foi identificado. Tente de novo mais tarde.';
+        this.modalMessage.display = true;
+        this.modalMessage.visibility = true;
+      })
+      .finally(() => {
+        this.loadingModal.visibility = false;
+        setTimeout(() => {
+          this.loadingModal.display = false;
+        }, 500);
+      });
   }
 }

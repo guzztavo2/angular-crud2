@@ -54,7 +54,6 @@ export class RegistroComponent {
     // this.messageModal.display = true;
     // this.messageModal.visibility = true;
 
-    this.submitForm();
     this.authService.login().subscribe((isLoggedIn: boolean) => {
       if (isLoggedIn) {
         this.router.navigateByUrl('/');

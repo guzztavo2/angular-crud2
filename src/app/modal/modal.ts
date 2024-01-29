@@ -1,6 +1,7 @@
 export class Modal {
   public title: string;
   public description: string;
+
   public canClose: boolean;
   public showFooter: boolean;
   public loadingIcon: boolean;
@@ -20,6 +21,7 @@ export class Modal {
   ) {
     this.title = title == undefined ? '' : title;
     this.description = description == undefined ? '' : description;
+
     this.canClose = canClose == undefined ? true : canClose;
     this.showFooter = showFooter == undefined ? true : showFooter;
     this.loadingIcon = loadingIcon == undefined ? true : loadingIcon;

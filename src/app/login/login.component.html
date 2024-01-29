@@ -2,6 +2,17 @@
   class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center"
 >
   <app-modal
+    *ngIf="this.modalMessage.display"
+    [modalVisible]="this.loadingModal.visibility"
+    [showFooter]="this.modalMessage.showFooter"
+    [canClose]="this.modalMessage.canClose"
+    [title]="this.modalMessage.title"
+    [description]="this.modalMessage.description"
+    [loading]="this.modalMessage.loadingIcon"
+    (modalVisibleEvent)="visibilityModal($event)"
+  ></app-modal>
+
+  <app-modal
     *ngIf="this.loadingModal.display"
     [modalVisible]="!this.loadingModal.visibility"
     [showFooter]="this.loadingModal.showFooter"
