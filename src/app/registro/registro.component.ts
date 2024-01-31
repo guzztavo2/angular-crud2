@@ -17,10 +17,8 @@ import User from '../auth/user';
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
   templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css',
 })
 export class RegistroComponent {
-  // public successModal: Modal;
   public loadingModal: Modal = {
     title: 'Sua requisição está sendo carregada! ⏳',
     description: '',
@@ -50,9 +48,6 @@ export class RegistroComponent {
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
     this.router = router;
-
-    // this.messageModal.display = true;
-    // this.messageModal.visibility = true;
 
     this.authService.login().subscribe((isLoggedIn: boolean) => {
       if (isLoggedIn) {
@@ -102,8 +97,13 @@ export class RegistroComponent {
         this.registerForm.get('password')?.value as string
       );
       User.setUser(user);
-      User.setActualUser(user);
-      this.router.navigateByUrl('/');
+      this.loadingModal.visibility = false;
+      setTimeout(() => {
+        this.loadingModal.display = false;
+      }, 500);
+
+      this.messageModal.display = true;
+      this.messageModal.visibility = true;
     });
   }
 }

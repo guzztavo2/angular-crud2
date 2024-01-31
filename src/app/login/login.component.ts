@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
-import { RouterLink, Router } from '@angular/router';
-import { RegistroComponent } from '../registro/registro.component';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -17,25 +16,22 @@ import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    RouterLink,
-    RegistroComponent,
-    CommonModule,
-    ReactiveFormsModule,
-    ModalComponent,
-  ],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  private router: Router;
+  private authService: AuthService;
   constructor(authService: AuthService, router: Router) {
-    authService.login().subscribe((isLoggedIn) => {
+    this.router = router;
+    this.authService = authService;
+
+    this.authService.login().subscribe((isLoggedIn) => {
       if (isLoggedIn) {
-        router.navigateByUrl('/');
+        this.router.navigateByUrl('/');
       }
     });
   }
-
   public loadingModal: Modal = {
     title: 'Sua requisição está sendo carregada! ⏳',
     description: '',
@@ -58,8 +54,11 @@ export class LoginComponent {
   };
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl('gustavo_bonifacio2020@outlook.com', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: new FormControl('gututeleS2010@', [Validators.required]),
   });
 
   visibilityModal(val: boolean) {
@@ -73,33 +72,45 @@ export class LoginComponent {
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
 
-    new Promise((success, error) => {
-      const user = User.getUserFromUsersList(
-        this.loginForm.get('email')?.value as string,
-        this.loginForm.get('password')?.value as string
-      );
-      if (user !== null) success(user as User);
-      error('Não foi possível localizar o usuário.');
-    })
-      .then((user: any) => {
-        user = user as User;
-        this.modalMessage.title = 'Sucesso!';
-        this.modalMessage.description = 'Bem vindo de volta, ' + user['name'];
-        this.modalMessage.display = true;
-        this.modalMessage.visibility = true;
+    if (this.loginForm.status !== 'VALID') {
+      this.loadingModal.visibility = false;
+      this.loadingModal.display = false;
+
+      this.modalMessage.title = 'Dados inválidos! ☹';
+      this.modalMessage.description =
+        'Lembre-se de preencher todo o formulário antes de acessar sua conta!';
+      this.modalMessage.display = true;
+      this.modalMessage.visibility = true;
+    } else {
+      new Promise((success, error) => {
+        const user = User.getUserFromUsersList(
+          this.loginForm.get('email')?.value as string,
+          this.loginForm.get('password')?.value as string
+        );
+        if (user !== null) success(user as User);
+        error('Não foi possível localizar o usuário.');
       })
-      .catch((error) => {
-        this.modalMessage.title = error;
-        this.modalMessage.description =
-          'Não será possível acessar o painel de administrador, pois o usuário não foi identificado. Tente de novo mais tarde.';
-        this.modalMessage.display = true;
-        this.modalMessage.visibility = true;
-      })
-      .finally(() => {
-        this.loadingModal.visibility = false;
-        setTimeout(() => {
-          this.loadingModal.display = false;
-        }, 500);
-      });
+        .then((user: any) => {
+          User.setActualUser(user);
+          this.authService.login().subscribe((val) => {
+            if (val) {
+              this.router.navigateByUrl('/');
+            }
+          });
+        })
+        .catch((error) => {
+          this.modalMessage.title = error;
+          this.modalMessage.description =
+            'Não será possível acessar o painel de administrador, pois o usuário não foi identificado. Tente de novo mais tarde.';
+          this.modalMessage.display = true;
+          this.modalMessage.visibility = true;
+        })
+        .finally(() => {
+          this.loadingModal.visibility = false;
+          setTimeout(() => {
+            this.loadingModal.display = false;
+          }, 500);
+        });
+    }
   }
 }

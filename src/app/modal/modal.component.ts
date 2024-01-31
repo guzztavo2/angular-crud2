@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
 })
 export class ModalComponent implements OnInit {
   @Input() modalVisible: boolean = false;
@@ -60,10 +59,4 @@ export class ModalComponent implements OnInit {
       }, 300);
     }
   }
-
-  // ngOnChanges(val: any) {
-  //   if (val.modalVisible !== undefined) {
-  //     this.setModalVisibility(val.modalVisible.currentValue);
-  //   }
-  // }
 }

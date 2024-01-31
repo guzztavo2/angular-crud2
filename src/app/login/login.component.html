@@ -31,8 +31,8 @@
       >
     </h1>
     <form
-      (ngSubmit)="submitForm()"
-      [formGroup]="loginForm"
+      (ngSubmit)="this.submitForm()"
+      [formGroup]="this.loginForm"
       action=""
       class="w-100 d-flex flex-column"
     >
@@ -55,6 +55,9 @@
           <div *ngIf="this.loginForm.get('email')?.errors?.['required']">
             O e-mail é um requisito.
           </div>
+          <div *ngIf="this.loginForm.get('email')?.errors?.['email']">
+            E-mail inválido.
+          </div>
         </div>
       </label>
       <label for="password" class="w-100 d-block my-1">
@@ -67,13 +70,15 @@
         />
         <div
           *ngIf="
-            this.loginForm.get('password') &&
+            this.loginForm.get('password') !== null &&
             (this.loginForm.get('password')?.dirty ||
               this.loginForm.get('password')?.touched)
           "
           class="fs-6 text-danger"
         >
-          <div *ngIf="this.loginForm.get('password')?.errors?.['required']">
+          <div
+            *ngIf="(this.loginForm.get('password') !== null && this.loginForm.get('password')?.errors?.['required'])"
+          >
             O e-mail é um requisito.
           </div>
         </div>
@@ -87,7 +92,8 @@
     <a
       routerLink="/registro"
       class="text-center fw-bold text-light fs-6 my-2 btn btn-success w-50"
-      >Registre-se, clicando aqui!</a
     >
+      Registre-se, clicando aqui!
+    </a>
   </div>
 </div>

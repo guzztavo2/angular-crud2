@@ -8,8 +8,11 @@ import { LogoutComponent } from './logout/logout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard] },
-  { path: 'login', component: LoginComponent, canDeactivate: [authGuard] },
-  { path: 'registro', component: RegistroComponent },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'registro',
+    component: RegistroComponent,
+  },
   {
     path: 'logout',
     component: LogoutComponent,
