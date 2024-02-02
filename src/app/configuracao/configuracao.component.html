@@ -11,69 +11,62 @@
   <h5 class="border-bottom my-2 fs-5 p-1">
     Formulário para a atualização de informações do usuário:
   </h5>
-  <form
-    (ngSubmit)="this.submitForm()"
-    [formGroup]="this.configuracaoForm"
-    class="border p-2 w-100 d-flex flex-row flex-wrap mt-3"
-  >
+  <form (ngSubmit)="this.submitForm()" [formGroup]="this.configuracaoForm"
+    class="border p-2 w-100 d-flex flex-row flex-wrap mt-3">
     <label for="nomeUsuario" class="w-50 p-1">
       <p class="fs-6 m-0 p-0 ms-1">Nome de usuário</p>
-      <input
-        type="text"
-        id="nomeUsuario"
-        formControlName="nomeUsuario"
-        class="border rounded p-2 w-100"
-        placeholder="nome de usuário"
-      />
-      <div
-        *ngIf="
+      <input type="text" id="nomeUsuario" formControlName="nomeUsuario" class="border rounded p-2 w-100"
+        placeholder="nome de usuário" />
+      <div *ngIf="
           this.configuracaoForm.get('nomeUsuario') &&
           (this.configuracaoForm.get('nomeUsuario')?.dirty ||
             this.configuracaoForm.get('nomeUsuario')?.touched)
-        "
-        class="fs-6 text-danger"
-      >
-        <div
-          *ngIf="this.configuracaoForm.get('nomeUsuario')?.errors?.['required']"
-        >
-          O e-mail é um requisito.
+        " class="fs-6 text-danger">
+        <div *ngIf="this.configuracaoForm.get('nomeUsuario')?.errors?.['minLength']">
+          Você precisa preencher o campo nome de usuário.
         </div>
       </div>
     </label>
     <label for="emailUsuario" class="w-50 p-1">
       <p class="fs-6 m-0 p-0 ms-1">E-mail</p>
-      <input
-        type="email"
-        id="emailUsuario"
-        class="border rounded p-2 w-100"
-        placeholder="E-mail"
-      />
+      <input type="email" id="emailUsuario" formControlName="emailUsuario" class="border rounded p-2 w-100"
+        placeholder="E-mail" />
+      <div *ngIf="
+          this.configuracaoForm.get('emailUsuario') &&
+          (this.configuracaoForm.get('emailUsuario')?.dirty ||
+            this.configuracaoForm.get('emailUsuario')?.touched)
+        " class="fs-6 text-danger">
+        <div *ngIf="this.configuracaoForm.get('emailUsuario')?.errors?.['email']">
+          Você precisa preencher o campo de e-mail.
+        </div>
+      </div>
     </label>
     <label for="senhaUsuario" class="w-100 p-1">
       <p class="fs-6 m-0 p-0 ms-1">Senha</p>
-      <input
-        type="password"
-        id="senhaUsuario"
-        class="border rounded p-2 w-100"
-        placeholder="Senha"
-      />
-    </label>
+      <input type="password" id="senhaUsuario" formControlName="senhaUsuario" class="border rounded p-2 w-100"
+        placeholder="Senha" />
+      <div *ngIf="
+          this.configuracaoForm.get('senhaUsuario') &&
+          (this.configuracaoForm.get('senhaUsuario')?.dirty ||
+          this.configuracaoForm.get('senhaUsuario')?.touched)
+        " class="fs-6 text-danger">
+        <div *ngIf="this.configuracaoForm.get('senhaUsuario')?.errors?.['checkPassword']">
+          Você precisa preencher o campo de e-mail.
+        </div>
 
+        <div
+          *ngIf="this.configuracaoForm.get('senhaUsuario')?.value !== this.configuracaoForm.get('confirmarSenhaUsuario')?.value ">
+          A senha de usuário e de confirmação precisam ser iguais.
+        </div>
+      </div>
+    </label>
     <label for="ConfirmarSenhaUsuario" class="w-100 p-1">
       <p class="fs-6 m-0 p-0 ms-1">Confirmar senha</p>
-      <input
-        type="password"
-        id="ConfirmarSenhaUsuario"
-        class="border rounded p-2 w-100"
-        placeholder="Confirmar senha"
-      />
+      <input type="password" id="ConfirmarSenhaUsuario" class="border rounded p-2 w-100"
+        placeholder="Confirmar senha" />
     </label>
     <div class="col-12 d-flex justify-content-end">
-      <input
-        type="submit"
-        value="Trocar informações"
-        class="col-4 btn btn-outline-danger m-4"
-      />
+      <input type="submit" value="Trocar informações" class="col-4 btn btn-outline-danger m-4" />
     </div>
   </form>
 </div>

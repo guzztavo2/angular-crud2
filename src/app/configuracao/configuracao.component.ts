@@ -4,9 +4,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import User from '../auth/user';
@@ -16,31 +19,66 @@ import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-configuracao',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
   templateUrl: './configuracao.component.html',
   styleUrl: './configuracao.component.css',
 })
 export class ConfiguracaoComponent {
   private authService;
-  public user;
+  public user: User;
+  public configuracaoForm: FormGroup;
+
   constructor(authService: AuthService) {
     this.authService = authService;
 
     this.authService.login().subscribe();
-    this.user = User.getActualUser();
+
+    let user = User.getActualUser();
+
+    if (user == null)
+      this.user = new User('', '', '');
+
+    this.user = user as User;
+
+    this.configuracaoForm = new FormGroup({
+      nomeUsuario: new FormControl(this.user.name, [
+        Validators.minLength(5)
+      ]),
+      emailUsuario: new FormControl(this.user.email, [
+        Validators.email,
+      ]),
+
+      senhaUsuario: new FormControl('', [Validators.required,
+      ConfiguracaoComponent.checkPassword()]),
+    });
+
+
+
   }
 
-  configuracaoForm = new FormGroup({
-    nomeUsuario: new FormControl('gustavo_bonifacio2020@outlook.com', [
-      Validators.required,
-    ]),
-    email: new FormControl('gustavo_bonifacio2020@outlook.com', [
-      Validators.required,
-      Validators.email,
-    ]),
+  static checkPassword(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
 
-    password: new FormControl('gututeleS2010@', [Validators.required]),
-  });
+      console.log(control)
+      alert("a");
 
-  submitForm() {}
+      const value = control.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const hasUpperCase = /[A-Z]+/.test(value);
+
+      const hasLowerCase = /[a-z]+/.test(value);
+
+      const hasNumeric = /[0-9]+/.test(value);
+
+      const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
+      alert("a");
+      return !passwordValid ? { passwordStrength: true } : null;
+    }
+  }
+
+  submitForm() { }
 }
