@@ -1,0 +1,79 @@
+<style>
+  input {
+    box-shadow: rgba(0, 0, 0, 0.432) 0px 0px 0px 1px;
+  }
+</style>
+<div class="h-100 w-100 container d-flex flex-column justify-content-start">
+  <h1 class="fs-4 mt-3 text-uppercase border-bottom p-1">Configurações</h1>
+
+  <p class="mt-3 fs-6">Aqui você pode alterar as configurações do usuário</p>
+
+  <h5 class="border-bottom my-2 fs-5 p-1">
+    Formulário para a atualização de informações do usuário:
+  </h5>
+  <form
+    (ngSubmit)="this.submitForm()"
+    [formGroup]="this.configuracaoForm"
+    class="border p-2 w-100 d-flex flex-row flex-wrap mt-3"
+  >
+    <label for="nomeUsuario" class="w-50 p-1">
+      <p class="fs-6 m-0 p-0 ms-1">Nome de usuário</p>
+      <input
+        type="text"
+        id="nomeUsuario"
+        formControlName="nomeUsuario"
+        class="border rounded p-2 w-100"
+        placeholder="nome de usuário"
+      />
+      <div
+        *ngIf="
+          this.configuracaoForm.get('nomeUsuario') &&
+          (this.configuracaoForm.get('nomeUsuario')?.dirty ||
+            this.configuracaoForm.get('nomeUsuario')?.touched)
+        "
+        class="fs-6 text-danger"
+      >
+        <div
+          *ngIf="this.configuracaoForm.get('nomeUsuario')?.errors?.['required']"
+        >
+          O e-mail é um requisito.
+        </div>
+      </div>
+    </label>
+    <label for="emailUsuario" class="w-50 p-1">
+      <p class="fs-6 m-0 p-0 ms-1">E-mail</p>
+      <input
+        type="email"
+        id="emailUsuario"
+        class="border rounded p-2 w-100"
+        placeholder="E-mail"
+      />
+    </label>
+    <label for="senhaUsuario" class="w-100 p-1">
+      <p class="fs-6 m-0 p-0 ms-1">Senha</p>
+      <input
+        type="password"
+        id="senhaUsuario"
+        class="border rounded p-2 w-100"
+        placeholder="Senha"
+      />
+    </label>
+
+    <label for="ConfirmarSenhaUsuario" class="w-100 p-1">
+      <p class="fs-6 m-0 p-0 ms-1">Confirmar senha</p>
+      <input
+        type="password"
+        id="ConfirmarSenhaUsuario"
+        class="border rounded p-2 w-100"
+        placeholder="Confirmar senha"
+      />
+    </label>
+    <div class="col-12 d-flex justify-content-end">
+      <input
+        type="submit"
+        value="Trocar informações"
+        class="col-4 btn btn-outline-danger m-4"
+      />
+    </div>
+  </form>
+</div>

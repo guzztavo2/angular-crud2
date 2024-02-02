@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegistroComponent } from './registro/registro.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ConfiguracaoComponent } from './configuracao/configuracao.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard] },
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'logout',
     component: LogoutComponent,
+  },
+  {
+    path: 'configuracoes',
+    component: ConfiguracaoComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

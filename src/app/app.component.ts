@@ -19,6 +19,8 @@ export class AppComponent {
     const result = User.getActualUser();
     if (result !== null) this.user = result;
     this.authService = authService;
+
+    this.authService.login().subscribe();
   }
   title = 'crudAngular';
 }
