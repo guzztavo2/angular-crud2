@@ -72,8 +72,15 @@
         </div>
         <div class=" my-1" *ngIf="this.configuracaoForm.get('actualPassword')?.value.length > 0">
           <p class="fs-6 m-0 p-0 ms-1">Confirmar senha</p>
-          <input (blur)="confirmarSenha()" formControlName="confirmActualPassword" type="password"
-            id="confirmarSenhaUsuario" class="border rounded p-2 w-100" placeholder="Confirmar senha" />
+          <input (keyup.enter)="confirmarSenha()" (blur)="confirmarSenha()" formControlName="confirmActualPassword"
+            type="password" id="confirmarSenhaUsuario" class="border rounded p-2 w-100" placeholder="Confirmar senha" />
+        </div>
+
+        <div class="col-12 d-flex flex-row justify-content-end my-2"
+          *ngIf="this.configuracaoForm.get('actualPassword')?.value == 
+          this.configuracaoForm.get('confirmActualPassword')?.value && this.configuracaoForm.get('confirmActualPassword')?.value.length > 0">
+          <button (click)="confirmarSenha()" class=" btn btn-outline-primary fade-in p-2">Clique aqui para trocar a
+            senha</button>
         </div>
       </label>
 

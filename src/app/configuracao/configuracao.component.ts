@@ -86,8 +86,8 @@ export class ConfiguracaoComponent {
     this.loadingModal.visibility = true;
 
     new Promise((resolve, error) => {
-      const senha = this.configuracaoForm.get("senhaUsuario") as FormControl;
-      const confirmarSenha = this.configuracaoForm.get("confirmarSenhaUsuario") as FormControl;
+      const senha = this.configuracaoForm.get("actualPassword") as FormControl;
+      const confirmarSenha = this.configuracaoForm.get("confirmActualPassword") as FormControl;
 
       if (senha.value == confirmarSenha.value) {
         const user = User.getUserFromUsersList(this.user.email, senha.value);
@@ -95,13 +95,13 @@ export class ConfiguracaoComponent {
         if (user == null)
           error("Senha inválida.");
 
-
+        resolve("Agora você pode preencher os novos campos de senha para trocar sua senha");
       } else {
         error("As senhas precisam ser iguais.");
       }
     }).then(success => {
       this.modalMessage.display = true;
-      this.modalMessage.title = "Sucesso ao trocar a senha";
+      this.modalMessage.title = "Sucesso ao acessar sua senha";
       this.modalMessage.description = success as string;
       this.modalMessage.visibility = true;
     })
@@ -117,7 +117,9 @@ export class ConfiguracaoComponent {
   }
   visibilityModal(value: boolean) {
     this.modalMessage.visibility = value;
-    this.modalMessage.display = value;
+    setTimeout(() => {
+      this.modalMessage.display = value;
+    }, 250);
   }
   submitForm() { }
 }

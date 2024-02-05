@@ -95,7 +95,9 @@ export default class User {
 
     return true;
   }
-
+  static removeActualUser() {
+    localStorage.removeItem('user')
+  }
   static setUsersList(users: User[]) {
     if (users.length == 0)
       localStorage.setItem('users', JSON.stringify([]));
