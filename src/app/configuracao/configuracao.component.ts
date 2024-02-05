@@ -28,6 +28,27 @@ export class ConfiguracaoComponent {
   public user: User;
   public configuracaoForm: FormGroup;
 
+  public loadingModal: Modal = {
+    title: 'Sua requisição está sendo carregada! ⏳',
+    description: '',
+    canClose: false,
+    showFooter: false,
+    visibility: false,
+    display: false,
+    loadingIcon: true,
+    redirect: false,
+  };
+  public modalMessage: Modal = {
+    title: 'Sua requisição está sendo carregada! ⏳',
+    description: '',
+    canClose: true,
+    showFooter: true,
+    visibility: false,
+    display: false,
+    loadingIcon: false,
+    redirect: false,
+  };
+
   constructor(authService: AuthService) {
     this.authService = authService;
 
@@ -48,37 +69,52 @@ export class ConfiguracaoComponent {
         Validators.email,
       ]),
 
-      senhaUsuario: new FormControl('', [Validators.required,
-      ConfiguracaoComponent.checkPassword()]),
+      senhaUsuario: new FormControl(''),
+      confirmarSenhaUsuario: new FormControl(''),
     });
-
-
-
+    User.removeFromID(1);
   }
 
-  static checkPassword(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
 
-      console.log(control)
-      alert("a");
+  confirmarSenha() {
 
-      const value = control.value;
+    this.loadingModal.display = true;
+    this.loadingModal.visibility = true;
 
-      if (!value) {
-        return null;
+    new Promise((resolve, error) => {
+      const senha = this.configuracaoForm.get("senhaUsuario") as FormControl;
+      const confirmarSenha = this.configuracaoForm.get("confirmarSenhaUsuario") as FormControl;
+
+      if (senha.value == confirmarSenha.value) {
+        const user = User.getUserFromUsersList(this.user.email, senha.value);
+
+        if (user == null)
+          error("Senha inválida.");
+
+
+
+      } else {
+        error("As senhas precisam ser iguais.");
       }
-
-      const hasUpperCase = /[A-Z]+/.test(value);
-
-      const hasLowerCase = /[a-z]+/.test(value);
-
-      const hasNumeric = /[0-9]+/.test(value);
-
-      const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
-      alert("a");
-      return !passwordValid ? { passwordStrength: true } : null;
-    }
+    }).then(success => {
+      this.modalMessage.display = true;
+      this.modalMessage.title = "Sucesso ao trocar a senha";
+      this.modalMessage.description = success as string;
+      this.modalMessage.visibility = true;
+    })
+      .catch(reason => {
+        this.modalMessage.display = true;
+        this.modalMessage.title = "Erro ao trocar a senha";
+        this.modalMessage.description = reason;
+        this.modalMessage.visibility = true;
+      }).finally(() => {
+        this.loadingModal.display = false;
+        this.loadingModal.visibility = false;
+      });
   }
-
+  visibilityModal(value: boolean) {
+    this.modalMessage.visibility = value;
+    this.modalMessage.display = value;
+  }
   submitForm() { }
 }

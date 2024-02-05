@@ -4,7 +4,7 @@ export default class User {
   email: string;
   password: string;
 
-  toString() {}
+  toString() { }
 
   toJson(): string {
     return JSON.stringify({
@@ -79,5 +79,31 @@ export default class User {
     }
 
     return null;
+  }
+
+  static removeFromID(id: number): Boolean {
+    const users = this.usersList();
+
+    const user = users.findIndex(user => {
+      if (user.id == id)
+        return user;
+      return null;
+    });
+
+    if (user == null)
+      return false;
+
+    delete users[user];
+
+    User.setUsersList(users.filter((user) => user !== undefined));
+
+    return true;
+  }
+
+  static setUsersList(users: User[]) {
+    if (users.length == 0)
+      localStorage.setItem('users', JSON.stringify([]));
+
+    localStorage.setItem('users', JSON.stringify(users));
   }
 }
