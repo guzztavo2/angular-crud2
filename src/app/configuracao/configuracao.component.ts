@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  FormsModule,
+  NgModel,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -19,7 +22,7 @@ import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-configuracao',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent, FormsModule],
   templateUrl: './configuracao.component.html',
   styleUrl: './configuracao.component.css',
 })
@@ -58,21 +61,22 @@ export class ConfiguracaoComponent {
 
     if (user == null)
       this.user = new User('', '', '');
-
-    this.user = user as User;
+    else
+      this.user = user as User;
 
     this.configuracaoForm = new FormGroup({
       nomeUsuario: new FormControl(this.user.name, [
         Validators.minLength(5)
       ]),
       emailUsuario: new FormControl(this.user.email, [
-        Validators.email,
+        Validators.email
       ]),
-
-      senhaUsuario: new FormControl(''),
-      confirmarSenhaUsuario: new FormControl(''),
+      actualPassword: new FormControl(""),
+      confirmActualPassword: new FormControl(""),
+      newPassword: new FormControl(""),
+      confirmNewPassword: new FormControl(""),
     });
-    User.removeFromID(1);
+
   }
 
 
@@ -90,7 +94,6 @@ export class ConfiguracaoComponent {
 
         if (user == null)
           error("Senha inválida.");
-
 
 
       } else {

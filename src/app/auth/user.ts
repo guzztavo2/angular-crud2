@@ -84,11 +84,7 @@ export default class User {
   static removeFromID(id: number): Boolean {
     const users = this.usersList();
 
-    const user = users.findIndex(user => {
-      if (user.id == id)
-        return user;
-      return null;
-    });
+    const user = users.findIndex(user => user.id == id);
 
     if (user == null)
       return false;
