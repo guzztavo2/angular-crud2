@@ -30,7 +30,7 @@ export class ConfiguracaoComponent {
   private authService;
   public user: User;
   public configuracaoForm: FormGroup;
-
+  public confirmPasssword: boolean = false;
   public loadingModal: Modal = {
     title: 'Sua requisição está sendo carregada! ⏳',
     description: '',
@@ -104,6 +104,7 @@ export class ConfiguracaoComponent {
       this.modalMessage.title = "Sucesso ao acessar sua senha";
       this.modalMessage.description = success as string;
       this.modalMessage.visibility = true;
+      this.confirmPasssword = true;
     })
       .catch(reason => {
         this.modalMessage.display = true;

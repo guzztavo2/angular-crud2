@@ -10,7 +10,8 @@
 <div class="h-100 w-100 container d-flex flex-column justify-content-start">
   <h1 class="fs-4 mt-3 text-uppercase border-bottom p-1">Configurações</h1>
 
-  <p class="mt-3 fs-6">Aqui você pode alterar as configurações do usuário</p>
+  <p class="mt-3 fs-6">Aqui você pode alterar as configurações do usuário. Você pode deixar campos <b> NÃO PREENCHIDOS e
+      assim não serão atualizados.</b> </p>
 
   <h5 class="border-bottom my-2 fs-5 p-1">
     Formulário para a atualização de informações do usuário:
@@ -58,37 +59,59 @@
     </label>
     <div class=" col-12 d-flex flex-row flex-wrap mt-2 mb-1">
       <p class="fs-6 m-0 p-0 ms-1 fw-bold col-12">Trocar senha</p>
-      <p class="fs-6 m-0 p-0 ms-1">Para trocar a senha, digite a senha antiga antes. E se confirmado, o campo será
+      <p class="fs-6 m-0 p-0 ms-1">Para trocar a senha, digite a senha antiga. E se confirmado, o campo será
         trocado para a nova senha.</p>
 
-      <label for="senhaUsuario" class="w-100 p-2 shadow-sm rounded border">
-        <p class="fs-6 m-0 p-0 ms-1">Senha atual</p>
-        <input type="password" id="senhaUsuario" formControlName="actualPassword" class="border rounded p-2 w-100"
-          placeholder="Senha" />
-        <div class="fs-6 text-danger" *ngIf="this.configuracaoForm.get('actualPassword')?.value !== 
-        this.configuracaoForm.get('confirmActualPassword')?.value && 
-        this.configuracaoForm.get('confirmActualPassword')?.value.length > 0 ">
-          A senha de usuário e de confirmação precisam ser iguais.
+      <label for="senhaUsuario" *ngIf="!this.confirmPasssword"
+        class="w-100 p-2 shadow-sm rounded border d-flex flex-row flex-wrap justify-content-around">
+        <div class="col-5">
+          <p class="fs-6 m-0 p-0 ms-1">Senha atual</p>
+          <input type="password" id="senhaUsuario" formControlName="actualPassword" class="border rounded p-2 w-100"
+            placeholder="Senha" />
+          <div class="fs-6 text-danger" *ngIf="this.configuracaoForm.get('actualPassword')?.value !== 
+                  this.configuracaoForm.get('confirmActualPassword')?.value && 
+                  this.configuracaoForm.get('confirmActualPassword')?.value.length > 0 ">
+            A senha de usuário e de confirmação precisam ser iguais.
+          </div>
         </div>
-        <div class=" my-1" *ngIf="this.configuracaoForm.get('actualPassword')?.value.length > 0">
-          <p class="fs-6 m-0 p-0 ms-1">Confirmar senha</p>
-          <input (keyup.enter)="confirmarSenha()" (blur)="confirmarSenha()" formControlName="confirmActualPassword"
-            type="password" id="confirmarSenhaUsuario" class="border rounded p-2 w-100" placeholder="Confirmar senha" />
+        <div class="col-5" *ngIf="this.configuracaoForm.get('actualPassword')?.value.length > 0">
+          <p class="fs-6 m-0 p-0 ms-1">Confirmar senha atual</p>
+          <input (keyup.enter)="confirmarSenha()" formControlName="confirmActualPassword" type="password"
+            id="confirmarSenhaUsuario" class="border rounded p-2 w-100" placeholder="Confirmar senha" />
         </div>
 
         <div class="col-12 d-flex flex-row justify-content-end my-2"
           *ngIf="this.configuracaoForm.get('actualPassword')?.value == 
           this.configuracaoForm.get('confirmActualPassword')?.value && this.configuracaoForm.get('confirmActualPassword')?.value.length > 0">
-          <button (click)="confirmarSenha()" class=" btn btn-outline-primary fade-in p-2">Clique aqui para trocar a
-            senha</button>
+          <button (click)="confirmarSenha()" class="btn btn-outline-primary fade-in p-2">Clique aqui para
+            confirmar</button>
         </div>
+      </label>
+
+      <label *ngIf="this.confirmPasssword" for="senhaUsuario" class="w-100 p-2 shadow-sm rounded border">
+        <p class="fs-6 m-0 p-0 ms-1 fw-bold">Nova senha 🔒</p>
+        <input type="password" id="senhaUsuario" formControlName="newPassword" class="border rounded p-2 w-100"
+          placeholder="Senha" />
+        <div class="fs-6 text-danger" *ngIf="this.configuracaoForm.get('newPassword')?.value !== 
+        this.configuracaoForm.get('confirmNewPassword')?.value && 
+        this.configuracaoForm.get('confirmNewPassword')?.value.length > 0 ">
+          A senha de usuário e de confirmação precisam ser iguais.
+        </div>
+        <div class=" my-1" *ngIf="this.configuracaoForm.get('newPassword')?.value.length > 0">
+          <p class="fs-6 m-0 p-0 ms-1 fw-bold">Confirmar sua nova senha</p>
+          <input (keyup.enter)="confirmarSenha()" (blur)="confirmarSenha()" formControlName="confirmNewPassword"
+            type="password" id="confirmarSenhaUsuario" class="border rounded p-2 w-100" placeholder="Confirmar senha" />
+        </div>
+
+
       </label>
 
 
 
     </div>
-    <div class="col-12 d-flex justify-content-end">
-      <input type="submit" value="Trocar informações" class="col-4 btn btn-outline-danger m-4" />
+    <div class="col-12 d-flex justify-content-end"
+      *ngIf="this.configuracaoForm.get('newPassword')?.value.length == 0 && this.configuracaoForm.get('confirmNewPassword')?.value.length == 0 || this.configuracaoForm.get('confirmNewPassword')?.value.length > 0 && this.configuracaoForm.get('newPassword')?.value.length > 0 && this.configuracaoForm.get('newPassword')?.value == this.configuracaoForm.get('confirmNewPassword')?.value ">
+      <input type="submit" value="Salvar novas informações" class="col-4 btn btn-outline-danger m-4" />
     </div>
 
   </form>

@@ -54,11 +54,11 @@ export class LoginComponent {
   };
 
   loginForm = new FormGroup({
-    email: new FormControl('gustavo_bonifacio2020@outlook.com', [
+    email: new FormControl('', [
       Validators.required,
       Validators.email,
     ]),
-    password: new FormControl('gututeleS2010@', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   visibilityModal(val: boolean) {
