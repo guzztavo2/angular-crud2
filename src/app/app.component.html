@@ -1,43 +1,20 @@
 <div class="d-flex flex-column h-100 justify-content-between">
   <header class="w-100 p-2 bg-danger shadow-sm">
-    <div
-      class="container w-100 d-flex flex-row justify-content-between align-items-center"
-    >
-      <a
-        *ngIf="authService.isLoggedIn"
-        class="m-0 p-0 w-25 text-light fw-bolder fs-5"
-        routerLink="/"
-      >
+    <div class="container w-100 d-flex flex-row justify-content-between align-items-center">
+      <a *ngIf="authService.isLoggedIn" class="m-0 p-0 w-25 text-light fw-bolder fs-5" routerLink="/">
         CRUD 2.0
       </a>
-      <a
-        *ngIf="!authService.isLoggedIn"
-        class="m-0 p-0 w-100 text-center text-light fw-bolder fs-5"
-        routerLink="/"
-      >
+      <a *ngIf="!authService.isLoggedIn" class="m-0 p-0 w-100 text-center text-light fw-bolder fs-5" routerLink="/">
         CRUD 2.0
       </a>
 
       <form *ngIf="authService.isLoggedIn" action="" class="w-25" method="get">
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Buscar informações"
-          class="fs-6 p-1 w-100 rounded shadow-sm"
-        />
+        <input type="text" name="" id="" placeholder="Buscar informações" class="fs-6 p-1 w-100 rounded shadow-sm" />
       </form>
 
-      <div
-        *ngIf="authService.isLoggedIn"
-        class="d-flex flex-row align-items-center justify-content-between w-25"
-      >
+      <div *ngIf="authService.isLoggedIn" class="d-flex flex-row align-items-center justify-content-between w-25">
         <div class="dropdown">
-          <a
-            class="dropdown-toggle cursor-pointer text-light fs-5"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="dropdown-toggle cursor-pointer text-light fs-5" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-fill"></i>
           </a>
           <ul class="dropdown-menu">
@@ -45,9 +22,7 @@
               {{ this.user.name }}
             </li>
             <li>
-              <a class="dropdown-item text-center" routerLink="/configuracoes"
-                >Configurações</a
-              >
+              <a class="dropdown-item text-center" routerLink="/configuracoes">Configurações</a>
             </li>
             <li>
               <a class="dropdown-item text-center" href="/logout">Sair</a>

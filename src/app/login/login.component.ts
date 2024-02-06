@@ -68,6 +68,8 @@ export class LoginComponent {
       this.modalMessage.display = val;
     }, 500);
   }
+
+
   submitForm() {
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;

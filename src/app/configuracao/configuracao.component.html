@@ -27,7 +27,7 @@
     [title]="this.loadingModal.title" [description]="this.loadingModal.description"
     [loading]="this.loadingModal.loadingIcon"></app-modal>
 
-  <form (ngSubmit)="this.submitForm()" [formGroup]="this.configuracaoForm"
+  <form (ngSubmit)="this.atualizarUsuario()" [formGroup]="this.configuracaoForm"
     class="p-2 w-100 d-flex flex-row flex-wrap mt-3">
     <label for="nomeUsuario" class="w-100 p-2 shadow-sm rounded border">
       <p class="fs-6 m-0 p-0 ms-1">Trocar nome de usuário</p>

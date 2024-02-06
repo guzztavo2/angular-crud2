@@ -79,6 +79,60 @@ export class ConfiguracaoComponent {
 
   }
 
+  atualizarUsuario() {
+    this.loadingModal.display = true;
+    this.loadingModal.visibility = true;
+
+    new Promise((resolve, error) => {
+      const nomeUsuario = this.configuracaoForm.get("nomeUsuario");
+      const emailUsuario = this.configuracaoForm.get("emailUsuario");
+      const newPassword = this.configuracaoForm.get("newPassword");
+
+      const check_value = (el: AbstractControl<any, any> | null) => {
+        if (el !== null && el.value !== "" && el.value !== null) {
+          return el.value;
+        }
+        return null;
+      };
+
+      let nome = check_value(nomeUsuario);
+      let email = check_value(emailUsuario);
+      let senha = check_value(newPassword);
+
+      nome = nome == null ? this.user.name : nome;
+      email = email == null ? this.user.email : email;
+      senha = senha == null ? this.user.password : senha;
+
+      User.removeFromID(this.user.id);
+
+      const user = new User(nome, email, senha, this.user.id);
+
+      User.removeActualUser();
+      User.setUser(user);
+      User.setActualUser(user);
+
+      resolve({
+        nomeAux: nome == null ? true : false,
+        emailAux: email == null ? true : false,
+        senhaAux: senha == null ? true : false,
+      });
+    }).then((user) => {
+      this.modalMessage.title = "Usuário atualizado com sucesso ✔";
+      this.modalMessage.description = "Seu usuário foi atualizado com sucesso as seguintes informações: " + (user as any).nomeAux ? "" : "Nome, "
+        + (user as any).emailAux ? "" : "E-mail, " + (user as any).senhaAux ? "" : "Senha";
+      this.modalMessage.redirect = '/';
+
+      this.modalMessage.display = true;
+      this.modalMessage.visibility = true;
+
+    }).finally(() => {
+      this.loadingModal.visibility = false;
+      setTimeout(() => {
+        this.loadingModal.display = false;
+      })
+    });
+
+  }
 
   confirmarSenha() {
 
