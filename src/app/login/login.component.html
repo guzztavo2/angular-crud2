@@ -1,56 +1,29 @@
-<div
-  class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center"
->
-  <app-modal
-    *ngIf="this.modalMessage.display"
-    [modalVisible]="this.loadingModal.visibility"
-    [showFooter]="this.modalMessage.showFooter"
-    [canClose]="this.modalMessage.canClose"
-    [title]="this.modalMessage.title"
-    [description]="this.modalMessage.description"
-    [loading]="this.modalMessage.loadingIcon"
-    (modalVisibleEvent)="visibilityModal($event)"
-  ></app-modal>
+<div class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center">
+  <app-modal *ngIf="this.modalMessage.display" [modalVisible]="this.loadingModal.visibility"
+    [showFooter]="this.modalMessage.showFooter" [canClose]="this.modalMessage.canClose"
+    [title]="this.modalMessage.title" [description]="this.modalMessage.description"
+    [loading]="this.modalMessage.loadingIcon" (modalVisibleEvent)="visibilityModal($event)"></app-modal>
 
-  <app-modal
-    *ngIf="this.loadingModal.display"
-    [modalVisible]="!this.loadingModal.visibility"
-    [showFooter]="this.loadingModal.showFooter"
-    [canClose]="this.loadingModal.canClose"
-    [title]="this.loadingModal.title"
-    [description]="this.loadingModal.description"
-    [loading]="this.loadingModal.loadingIcon"
-  ></app-modal>
+  <app-modal *ngIf="this.loadingModal.display" [modalVisible]="!this.loadingModal.visibility"
+    [showFooter]="this.loadingModal.showFooter" [canClose]="this.loadingModal.canClose"
+    [title]="this.loadingModal.title" [description]="this.loadingModal.description"
+    [loading]="this.loadingModal.loadingIcon"></app-modal>
 
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">LOGIN</h1>
   <div class="w-50 border p-2 shadow-sm d-flex flex-column">
     <h1 class="fs-5 fw-bold text-uppercase">
       Seja bem vindo,
-      <span class="fw-normal text-lowercase"
-        >Acesse seu usuário para logar no sistema.</span
-      >
+      <span class="fw-normal text-lowercase">Acesse seu usuário para logar no sistema.</span>
     </h1>
-    <form
-      (ngSubmit)="this.submitForm()"
-      [formGroup]="this.loginForm"
-      class="w-100 d-flex flex-column"
-    >
+    <form (ngSubmit)="this.submitForm()" [formGroup]="this.loginForm" class="w-100 d-flex flex-column">
       <label for="email" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">E-mail</p>
-        <input
-          type="text"
-          formControlName="email"
-          id="email"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input type="text" formControlName="email" id="email" class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.loginForm.get('email') &&
             (this.loginForm.get('email')?.dirty ||
               this.loginForm.get('email')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
+          " class="fs-6 text-danger">
           <div *ngIf="this.loginForm.get('email')?.errors?.['required']">
             O e-mail é um requisito.
           </div>
@@ -61,37 +34,22 @@
       </label>
       <label for="password" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Senha</p>
-        <input
-          type="password"
-          formControlName="password"
-          id="password"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input type="password" formControlName="password" id="password"
+          class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.loginForm.get('password') !== null &&
             (this.loginForm.get('password')?.dirty ||
               this.loginForm.get('password')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
+          " class="fs-6 text-danger">
           <div
-            *ngIf="(this.loginForm.get('password') !== null && this.loginForm.get('password')?.errors?.['required'])"
-          >
-            O e-mail é um requisito.
+            *ngIf="(this.loginForm.get('password') !== null && this.loginForm.get('password')?.errors?.['required'])">
+            O campo senha é necessário.
           </div>
         </div>
       </label>
-      <input
-        class="btn btn-primary p-1 text-light my-2"
-        type="submit"
-        value="Acessar"
-      />
+      <input class="btn btn-primary p-1 text-light my-2" type="submit" value="Acessar" />
     </form>
-    <a
-      routerLink="/registro"
-      class="text-center fw-bold text-light fs-6 my-2 btn btn-success w-50"
-    >
+    <a routerLink="/registro" class="text-center fw-bold text-light fs-6 my-2 btn btn-success w-50">
       Registre-se, clicando aqui!
     </a>
   </div>
