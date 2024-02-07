@@ -55,7 +55,9 @@ export class ModalComponent implements OnInit {
       this.modalVisibleClass = 'fade-out-top';
       setTimeout(() => {
         this.modalVisible = false;
-        if (this.redirect !== false) this.router.navigateByUrl(this.redirect);
+        if (this.redirect !== false) {
+          this.router.navigateByUrl(this.redirect);
+        }
       }, 300);
     }
   }

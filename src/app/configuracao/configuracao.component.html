@@ -20,7 +20,8 @@
   <app-modal *ngIf="this.modalMessage.display" [modalVisible]="this.loadingModal.visibility"
     [showFooter]="this.modalMessage.showFooter" [canClose]="this.modalMessage.canClose"
     [title]="this.modalMessage.title" [description]="this.modalMessage.description"
-    [loading]="this.modalMessage.loadingIcon" (modalVisibleEvent)="visibilityModal($event)"></app-modal>
+    [redirect]="this.modalMessage.redirect" [loading]="this.modalMessage.loadingIcon"
+    (modalVisibleEvent)="visibilityModal($event)"></app-modal>
 
   <app-modal *ngIf="this.loadingModal.display" [modalVisible]="!this.loadingModal.visibility"
     [showFooter]="this.loadingModal.showFooter" [canClose]="this.loadingModal.canClose"

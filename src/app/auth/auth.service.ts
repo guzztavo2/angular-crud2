@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, delay, count } from 'rxjs/operators';
 import User from './user';
 
@@ -12,31 +12,28 @@ export class AuthService {
 
   redirectUrl: string | null = null;
 
+  public userSource = new BehaviorSubject(User);
+  public currentUser = this.userSource.asObservable();
+
   login(): Observable<boolean> {
     const propUser = User.getActualUser();
     const actualUser = propUser == null ? false : true;
     return of(actualUser).pipe(
       delay(1000),
       tap(() => {
-        if (actualUser !== false)
+        if (actualUser !== false) {
           localStorage.setItem('user', (propUser as User).toJson());
+          this.updateUser(propUser);
+        }
         this.isLoggedIn = actualUser;
       })
     );
   }
 
-  getUser(): User | false {
-    const user = User.getActualUser();
-
-    if (user !== null) {
-      this.isLoggedIn = true;
-      return user;
-    }
-
-    this.isLoggedIn = false;
-
-    return false;
+  updateUser(user: any) {
+    this.userSource.next(user);
   }
+
 
   register(user: User) {
     this.isLoggedIn = true;

@@ -17,9 +17,11 @@ export class AppComponent {
   public user!: User;
   constructor(authService: AuthService) {
     this.authService = authService;
-    const user = authService.getUser();
-    if (user !== false) this.user = user;
+    this.authService.currentUser.subscribe(user => {
+      this.user = (user as any);
+    })
   }
+
 
   title = 'crudAngular';
 }

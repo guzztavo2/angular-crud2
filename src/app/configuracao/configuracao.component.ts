@@ -83,7 +83,7 @@ export class ConfiguracaoComponent {
     this.loadingModal.display = true;
     this.loadingModal.visibility = true;
 
-    new Promise((resolve, error) => {
+    new Promise(resolve => {
       const nomeUsuario = this.configuracaoForm.get("nomeUsuario");
       const emailUsuario = this.configuracaoForm.get("emailUsuario");
       const newPassword = this.configuracaoForm.get("newPassword");
@@ -107,24 +107,25 @@ export class ConfiguracaoComponent {
 
       const user = new User(nome, email, senha, this.user.id);
 
+      this.user = user;
+
       User.removeActualUser();
       User.setUser(user);
       User.setActualUser(user);
 
-      resolve({
-        nomeAux: nome == null ? true : false,
-        emailAux: email == null ? true : false,
-        senhaAux: senha == null ? true : false,
-      });
+      let nomeAux = nome == null ? "" : "Nome, ";
+      let emailAux = email == null ? "" : "E-mail, ";
+      let senhaAux = senha == null ? "" : "Senha, ";
+      this.authService.updateUser(user);
+
+      resolve(String(nomeAux + emailAux + senhaAux));
     }).then((user) => {
       this.modalMessage.title = "Usuário atualizado com sucesso ✔";
-      this.modalMessage.description = "Seu usuário foi atualizado com sucesso as seguintes informações: " + (user as any).nomeAux ? "" : "Nome, "
-        + (user as any).emailAux ? "" : "E-mail, " + (user as any).senhaAux ? "" : "Senha";
-      this.modalMessage.redirect = '/';
+      this.modalMessage.description = "Seu usuário foi atualizado com sucesso!";
 
       this.modalMessage.display = true;
       this.modalMessage.visibility = true;
-
+      this.modalMessage.redirect = '/';
     }).finally(() => {
       this.loadingModal.visibility = false;
       setTimeout(() => {
