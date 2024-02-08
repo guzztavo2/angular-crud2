@@ -1,7 +1,8 @@
 <app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
     [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"
     [title]="this.modalAdicionar.title" [description]="this.modalAdicionar.description"
-    [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"></app-modal>
+    [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"
+    (modalVisibleEvent)="this.modalAdicionar.setVisibleModal($event)" (data)="this.addInformation($event)"></app-modal>
 
 <div class="h-100 w-100 container d-flex flex-column">
     <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
@@ -12,7 +13,8 @@
         <input type="text" placeholder="Buscar informação" name="" class="col-12 p-2 border rounded" id="">
     </form>
     <div class="d-flex flex-row col-12 flex-wrap justify-content-around">
-        <button class="btn btn-outline-primary">Adicionar/Criar nova informação</button>
+        <button class="btn btn-outline-primary" (click)="this.adicionarInformacao()">Adicionar/Criar nova
+            informação</button>
         <button class="btn btn-outline-success">Gerar Informações</button>
         <button class="btn btn-outline-danger">Deletar Informações</button>
     </div>
@@ -29,12 +31,12 @@
                 <th class="cursor-pointer" scope="col">Updated_at</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let informacao of this.informacoes">
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
+                <th scope="row">{{informacao.getId()}}</th>
+                <td>{{informacao.getName()}}</td>
+                <td>{{informacao.getCreatedAt()}}</td>
+                <td>{{informacao.getUpdatedAt()}}</td>
             </tr>
 
         </tbody>

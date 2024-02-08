@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements OnInit {
@@ -18,6 +19,8 @@ export class ModalComponent implements OnInit {
   @Input() redirect: string | false = false;
   @Input() modal_type: string | false = false;
   @Output() modalVisibleEvent = new EventEmitter<boolean>();
+  @Output() data = new EventEmitter<any>();
+
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
 
@@ -47,10 +50,8 @@ export class ModalComponent implements OnInit {
     this.modalVisibleEvent.emit(!modalVisible);
     if (!modalVisible) {
       this.modalVisible = true;
-      setTimeout(() => {
-        this.backDropVisibleClass = 'fade-in';
-        this.modalVisibleClass = 'fade-in-top';
-      }, 300);
+      this.backDropVisibleClass = 'fade-in';
+      this.modalVisibleClass = 'fade-in-top';
     } else {
       this.backDropVisibleClass = 'fade-out';
       this.modalVisibleClass = 'fade-out-top';
@@ -59,7 +60,14 @@ export class ModalComponent implements OnInit {
         if (this.redirect !== false) {
           this.router.navigateByUrl(this.redirect);
         }
-      }, 300);
+      }, 150);
     }
   }
+
+  public modalData: string = "";
+  saveInformation() {
+    this.data.emit(this.modalData);
+    this.setModalVisibility(true);
+  }
+
 }

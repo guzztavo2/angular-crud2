@@ -43,9 +43,13 @@
     <section class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center">
       <label for="informacao" class="col-12 p-2">
         <p class="m-0 p-0 fs-6 text-uppercase col-12 text-start">Informação</p>
-        <input type="text" id="informacao" placeholder="Digite a informação"
-          class="p-1 fs-6 border shadow-sm rounded col-12">
+        <input type="text" name="informacao" id="informacao" placeholder="Digite a informação"
+          class="p-2 fs-6 shadow-sm rounded col-12" [(ngModel)]="this.modalData">
       </label>
+      <div class="col-12 d-flex flex-row flex-wrap p-2 justify-content-between">
+        <input type="button" class="btn btn-outline-danger close-modal" value="Cancelar">
+        <input type="button" (click)="saveInformation()" class="btn btn-outline-primary" value="salvar informação">
+      </div>
     </section>
   </div>
 </div>
@@ -77,8 +81,8 @@
   }
 
   .fade-in-top {
-    -webkit-animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-    animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    -webkit-animation: fade-in-top 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    animation: fade-in-top 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   }
 
   @-webkit-keyframes fade-in-top {
@@ -135,8 +139,8 @@
   }
 
   .fade-out-top {
-    -webkit-animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    -webkit-animation: fade-out-top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: fade-out-top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   @-webkit-keyframes fade-out-top {

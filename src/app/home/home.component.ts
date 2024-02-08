@@ -11,20 +11,31 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
 
-  public modalAdicionar: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: true,
-    showFooter: true,
-    visibility: false,
-    display: false,
-    loadingIcon: false,
-    redirect: false,
-  };
+  public modalAdicionar: Modal;
+
+  public dataModal = null;
+
   public informacoes: Informacao[];
   constructor() {
+    this.modalAdicionar = new Modal();
+    this.modalAdicionar.title = "";
+    this.modalAdicionar.description = "";
+    this.modalAdicionar.canClose = true;
+    this.modalAdicionar.showFooter = true;
+    this.modalAdicionar.visibility = false;
+    this.modalAdicionar.display = false;
+    this.modalAdicionar.loadingIcon = false;
+    this.modalAdicionar.redirect = false;
+
     this.informacoes = Informacao.get_all();
-    this.modalAdicionar.display = true;
-    this.modalAdicionar.visibility = true;
+  }
+
+  adicionarInformacao() {
+    this.modalAdicionar.setVisibleModal(true);
+  }
+
+  addInformation(data: string) {
+    Informacao.create(data);
+    this.informacoes = Informacao.get_all();
   }
 }

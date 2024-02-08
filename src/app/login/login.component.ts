@@ -41,6 +41,9 @@ export class LoginComponent {
     display: false,
     loadingIcon: true,
     redirect: false,
+    setVisibleModal: function (val: boolean): void {
+      this.setVisibleModal(val);
+    }
   };
   public modalMessage: Modal = {
     title: 'Sua requisição está sendo carregada! ⏳',
@@ -51,6 +54,9 @@ export class LoginComponent {
     display: false,
     loadingIcon: false,
     redirect: false,
+    setVisibleModal: function (val: boolean): void {
+      this.setVisibleModal(val);
+    }
   };
 
   loginForm = new FormGroup({

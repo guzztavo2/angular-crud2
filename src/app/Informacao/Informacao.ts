@@ -34,6 +34,19 @@ export default class Informacao {
         this.updated_at = updated_at;
     }
 
+    public getId() {
+        return this.id;
+    }
+    public getName() {
+        return this.name;
+    }
+    public getCreatedAt() {
+        return this.created_at;
+    }
+    public getUpdatedAt() {
+        return this.updated_at;
+    }
+
     public toJson(): string {
         return JSON.stringify(this);
     }
@@ -74,7 +87,7 @@ export default class Informacao {
     public static get_all() {
         const result = localStorage.getItem("informacoes");
         if (result !== null)
-            return JSON.parse(result as string) as Informacao[];
+            return (JSON.parse(result as string) as []).map((value: any) => new Informacao(value.id, value.name, value.created_at, value.updated_at));
         return [];
     }
 

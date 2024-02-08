@@ -31,30 +31,15 @@ export class ConfiguracaoComponent {
   public user: User;
   public configuracaoForm: FormGroup;
   public confirmPasssword: boolean = false;
-  public loadingModal: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: false,
-    showFooter: false,
-    visibility: false,
-    display: false,
-    loadingIcon: true,
-    redirect: false,
-  };
-  public modalMessage: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: true,
-    showFooter: true,
-    visibility: false,
-    display: false,
-    loadingIcon: false,
-    redirect: false,
-  };
+  public loadingModal: Modal;
+  public modalMessage: Modal;
 
   constructor(authService: AuthService) {
-    this.authService = authService;
 
+    this.loadingModal = new Modal('Sua requisição está sendo carregada! ⏳', '', false, false, false, false, true);
+    this.modalMessage = new Modal('', '', true, true, false, false, false);
+
+    this.authService = authService;
     this.authService.login().subscribe();
 
     let user = User.getActualUser();

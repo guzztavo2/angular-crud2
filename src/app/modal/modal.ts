@@ -10,14 +10,14 @@ export class Modal {
   public redirect: string | false;
 
   constructor(
-    title: string | undefined,
-    description: string | undefined,
-    canClose: boolean | undefined,
-    showFooter: boolean | undefined,
-    loadingIcon: boolean | undefined,
-    display: boolean | undefined,
-    visibility: boolean | undefined,
-    redirect: string | undefined
+    title: string | undefined = undefined,
+    description: string | undefined = undefined,
+    canClose: boolean | undefined = undefined,
+    showFooter: boolean | undefined = undefined,
+    loadingIcon: boolean | undefined = undefined,
+    display: boolean | undefined = undefined,
+    visibility: boolean | undefined = undefined,
+    redirect: string | undefined = undefined
   ) {
     this.title = title == undefined ? '' : title;
     this.description = description == undefined ? '' : description;
@@ -28,5 +28,13 @@ export class Modal {
     this.display = display == undefined ? true : display;
     this.visibility = visibility == undefined ? true : visibility;
     this.redirect = redirect == undefined ? false : redirect;
+  }
+
+  public setVisibleModal(val: boolean) {
+    this.visibility = val;
+
+    setTimeout(() => {
+      this.display = val;
+    }, 100);
   }
 }

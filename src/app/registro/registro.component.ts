@@ -28,6 +28,8 @@ export class RegistroComponent {
     display: false,
     loadingIcon: true,
     redirect: false,
+    setVisibleModal: function (val: boolean): void {
+    }
   };
 
   public messageModal: Modal = {
@@ -39,6 +41,8 @@ export class RegistroComponent {
     display: false,
     loadingIcon: false,
     redirect: '/',
+    setVisibleModal: function (val: boolean): void {
+    }
   };
 
   private authService: AuthService;
@@ -69,7 +73,7 @@ export class RegistroComponent {
   getPasswordValue(): string {
     return (
       this.registerForm.get('password') == null ||
-      this.registerForm.get('password') == undefined
+        this.registerForm.get('password') == undefined
         ? ''
         : this.registerForm.get('password')?.value
     ) as string;
