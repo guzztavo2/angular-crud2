@@ -1,23 +1,14 @@
 <div *ngIf="modalVisible" class="modal_v2 p-4 {{ this.backDropVisibleClass }}">
-  <div
-    class="container p-2 bg-light rounded shadow w-100 h-auto {{
+  <div *ngIf="this.modal_type == false" class="container p-2 bg-light rounded shadow w-100 h-auto {{
       this.modalVisibleClass
-    }}"
-  >
-    <header
-      class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2"
-    >
+    }}">
+    <header class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2">
       <h1 class="m-0 p-0 fw-light fs-4">{{ title }}</h1>
-      <h1
-        *ngIf="canClose"
-        class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4"
-      >
+      <h1 *ngIf="canClose" class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4">
         X
       </h1>
     </header>
-    <section
-      class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center"
-    >
+    <section class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center">
       <p class="d-block w-100">{{ description }}</p>
       <div *ngIf="loading == true" class="lds-spinner text-center">
         <div></div>
@@ -34,14 +25,28 @@
         <div></div>
       </div>
     </section>
-    <footer
-      *ngIf="showFooter"
-      class="border-top p-3 d-flex justify-content-center"
-    >
+    <footer *ngIf="showFooter" class="border-top p-3 d-flex justify-content-center">
       <button *ngIf="canClose" class="fs-6 btn btn-warning close-modal w-50">
         Ok, entendi!
       </button>
     </footer>
+  </div>
+  <div *ngIf="this.modal_type == 'adicionar_informacao'" class="container p-2 bg-light rounded shadow w-100 h-auto {{
+      this.modalVisibleClass
+    }}">
+    <header class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2">
+      <h1 class="m-0 p-0 fw-light fs-4">Criar nova informação 💾</h1>
+      <h1 *ngIf="canClose" class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4">
+        X
+      </h1>
+    </header>
+    <section class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center">
+      <label for="informacao" class="col-12 p-2">
+        <p class="m-0 p-0 fs-6 text-uppercase col-12 text-start">Informação</p>
+        <input type="text" id="informacao" placeholder="Digite a informação"
+          class="p-1 fs-6 border shadow-sm rounded col-12">
+      </label>
+    </section>
   </div>
 </div>
 
@@ -49,6 +54,7 @@
   div.container {
     max-width: 40%;
   }
+
   div.modal_v2 {
     background-color: rgba(0, 0, 0, 0.459);
     width: 100% !important;
@@ -69,6 +75,7 @@
     background-color: red;
     color: white !important;
   }
+
   .fade-in-top {
     -webkit-animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
     animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -101,6 +108,7 @@
       opacity: 1;
     }
   }
+
   .fade-in {
     -webkit-animation: fade-in 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
     animation: fade-in 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -110,22 +118,24 @@
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
   }
+
   @keyframes fade-in {
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
   }
 
   .fade-out-top {
-    -webkit-animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-      both;
+    -webkit-animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: fade-out-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
@@ -135,18 +145,21 @@
       transform: translateY(0);
       opacity: 1;
     }
+
     100% {
       -webkit-transform: translateY(-50px);
       transform: translateY(-50px);
       opacity: 0;
     }
   }
+
   @keyframes fade-out-top {
     0% {
       -webkit-transform: translateY(0);
       transform: translateY(0);
       opacity: 1;
     }
+
     100% {
       -webkit-transform: translateY(-50px);
       transform: translateY(-50px);
@@ -163,14 +176,17 @@
     0% {
       opacity: 1;
     }
+
     100% {
       opacity: 0;
     }
   }
+
   @keyframes fade-out {
     0% {
       opacity: 1;
     }
+
     100% {
       opacity: 0;
     }
@@ -183,10 +199,12 @@
     width: 80px;
     height: 80px;
   }
+
   .lds-spinner div {
     transform-origin: 40px 40px;
     animation: lds-spinner 1.2s linear infinite;
   }
+
   .lds-spinner div:after {
     content: " ";
     display: block;
@@ -198,58 +216,72 @@
     border-radius: 20%;
     background: #000000;
   }
+
   .lds-spinner div:nth-child(1) {
     transform: rotate(0deg);
     animation-delay: -1.1s;
   }
+
   .lds-spinner div:nth-child(2) {
     transform: rotate(30deg);
     animation-delay: -1s;
   }
+
   .lds-spinner div:nth-child(3) {
     transform: rotate(60deg);
     animation-delay: -0.9s;
   }
+
   .lds-spinner div:nth-child(4) {
     transform: rotate(90deg);
     animation-delay: -0.8s;
   }
+
   .lds-spinner div:nth-child(5) {
     transform: rotate(120deg);
     animation-delay: -0.7s;
   }
+
   .lds-spinner div:nth-child(6) {
     transform: rotate(150deg);
     animation-delay: -0.6s;
   }
+
   .lds-spinner div:nth-child(7) {
     transform: rotate(180deg);
     animation-delay: -0.5s;
   }
+
   .lds-spinner div:nth-child(8) {
     transform: rotate(210deg);
     animation-delay: -0.4s;
   }
+
   .lds-spinner div:nth-child(9) {
     transform: rotate(240deg);
     animation-delay: -0.3s;
   }
+
   .lds-spinner div:nth-child(10) {
     transform: rotate(270deg);
     animation-delay: -0.2s;
   }
+
   .lds-spinner div:nth-child(11) {
     transform: rotate(300deg);
     animation-delay: -0.1s;
   }
+
   .lds-spinner div:nth-child(12) {
     transform: rotate(330deg);
     animation-delay: 0s;
   }
+
   @keyframes lds-spinner {
     0% {
       opacity: 1;
     }
+
     100% {
       opacity: 0;
     }

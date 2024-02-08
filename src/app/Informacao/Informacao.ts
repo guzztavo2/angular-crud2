@@ -52,7 +52,7 @@ export default class Informacao {
 
     public static update(id: number, name: string): string | Informacao {
         const informacao = this.findById(id);
-        
+
         if (informacao == undefined)
             return "Não foi possível identificar essa informação";
 
@@ -71,7 +71,7 @@ export default class Informacao {
         return data;
     }
 
-    private static get_all() {
+    public static get_all() {
         const result = localStorage.getItem("informacoes");
         if (result !== null)
             return JSON.parse(result as string) as Informacao[];

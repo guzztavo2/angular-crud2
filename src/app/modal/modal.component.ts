@@ -16,6 +16,7 @@ export class ModalComponent implements OnInit {
   @Input() canClose: boolean = true;
   @Input() loading: boolean = true;
   @Input() redirect: string | false = false;
+  @Input() modal_type: string | false = false;
   @Output() modalVisibleEvent = new EventEmitter<boolean>();
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
