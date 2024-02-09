@@ -30,7 +30,7 @@
 
     <div class="d-flex flex-column col-12 align-items-end">
         <h5 class="m-2 fw-bold fs-6">Por página:</h5>
-        <select (change)="setPaginate($event)" class="form-select w-25">
+        <select (change)="setPerPagePaginate($event)" class="form-select w-25">
             <option value="5">5</option>
             <option selected value="10">10</option>
             <option value="15">15</option>
@@ -60,8 +60,8 @@
                     informacao.getName()}}</td>
                 <td>{{informacao.getCreatedAt()}}</td>
                 <td>{{informacao.getUpdatedAt()}}</td>
-                <td><i class="bi bi-pencil-square ms-1 cursor-pointer"></i><i
-                        class="bi bi-trash ms-1 cursor-pointer"></i>
+                <td><i class="bi bi-pencil-square ms-1 cursor-pointer fs-4"></i><i
+                        class="bi bi-trash ms-1 cursor-pointer fs-4"></i>
 
                 </td>
             </tr>
@@ -69,11 +69,8 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Voltar</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+            <li class="page-item page-link {{page == this.actual_page ? 'active' : '' }} cursor-pointer " *ngFor=" let
+                page of this.paginate()" (click)="setActualPage(page)">{{page}}</li>
         </ul>
     </nav>
 

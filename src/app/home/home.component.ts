@@ -16,10 +16,9 @@ export class HomeComponent {
   public modalGerar: Modal;
   public dataModal = null;
   public actual_page = 1;
+  public per_page = 10;
 
   public informacoes: Informacao[];
-
-  public pagination: {};
 
   constructor() {
     this.modalAdicionar = new Modal();
@@ -42,33 +41,35 @@ export class HomeComponent {
     this.modalGerar.loadingIcon = false;
     this.modalGerar.redirect = false;
 
-    this.pagination = {};
-    this.informacoes = this.paginateData(10, 1);
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
 
   }
 
   private paginateData(per_page: number, actualPage: number) {
     const data = Informacao.get_all();
 
-    const pagination = Math.ceil(data.length / per_page);
-   
-    this.pagination = {
-      previous_page: this.actual_page == 1 ? 1 : this.actual_page - 1,
-      actual_page: this.actual_page,
-
-    };
-
     return data.slice((actualPage - 1) * per_page, actualPage * per_page);
   }
 
-  setPaginate(event: Event | null = null) {
-    let per_page = 10;
-
-    if (event !== null) {
-      per_page = (event as any).target.selectedOptions[0].getAttribute('value');
+  public paginate() {
+    const result = [];
+    for (let n = 1; n <= Math.ceil(Informacao.get_all().length / this.per_page); n++) {
+      result.push(n);
     }
 
-    this.informacoes = this.paginateData(per_page, 1);
+    return result;
+  }
+  setPerPagePaginate(event: Event | null = null) {
+    if (event !== null) {
+      this.per_page = Number.parseInt((event.target as HTMLSelectElement).selectedOptions[0].getAttribute("value") as string);
+      this.actual_page = 1;
+    }
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
+
+  }
+  setActualPage(data: number) {
+    this.actual_page = data;
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
   }
   adicionarInformacao() {
     this.modalAdicionar.setVisibleModal(true);
@@ -79,11 +80,11 @@ export class HomeComponent {
   }
   addInformation(data: string) {
     Informacao.create(data);
-    this.informacoes = Informacao.get_all();
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
   }
 
   generateInformations(data: string) {
     Informacao.generateInformations(Number.parseInt(data));
-    this.informacoes = Informacao.get_all();
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
   }
 }
