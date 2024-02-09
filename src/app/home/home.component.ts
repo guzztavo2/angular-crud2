@@ -51,10 +51,10 @@ export class HomeComponent {
     this.modalEditar.display = false;
     this.modalEditar.loadingIcon = false;
     this.modalEditar.redirect = false;
-    
+
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
 
-    this.editarInformacaoModal();
+
 
   }
 
@@ -92,8 +92,8 @@ export class HomeComponent {
     this.modalGerar.setVisibleModal(true);
   }
 
-  editarInformacaoModal() {
-    this.editarInformacao = this.informacoes[0];
+  editarInformacaoModal(informacao: Informacao) {
+    this.editarInformacao = informacao;
     this.modalEditar.setVisibleModal(true);
   }
 
