@@ -52,6 +52,28 @@
       </div>
     </section>
   </div>
+  <div *ngIf="this.modal_type == 'gerar_informacao'" class="container p-2 bg-light rounded shadow w-100 h-auto {{
+      this.modalVisibleClass
+    }}">
+    <header class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2">
+      <h1 class="m-0 p-0 fw-light fs-4">Gerar informações</h1>
+      <h1 *ngIf="canClose" class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4">
+        X
+      </h1>
+    </header>
+    <section class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center">
+      <label for="informacao" class="col-12 p-2">
+        <p class="m-0 p-0 fs-6 text-uppercase col-12 text-start">Quantidade</p>
+        <input (keyup)="onlyNonNumeric()" type="text" name="informacao" id="informacao"
+          placeholder="Digite a quantidade informações a ser geradas" class="p-2 fs-6 shadow-sm rounded col-12"
+          [(ngModel)]="this.modalData">
+      </label>
+      <div class="col-12 d-flex flex-row flex-wrap p-2 justify-content-between">
+        <input type="button" class="btn btn-outline-danger close-modal" value="Cancelar">
+        <input type="button" (click)="saveInformation()" class="btn btn-outline-primary" value="salvar informação">
+      </div>
+    </section>
+  </div>
 </div>
 
 <style>

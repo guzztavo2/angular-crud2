@@ -70,4 +70,10 @@ export class ModalComponent implements OnInit {
     this.setModalVisibility(true);
   }
 
+  onlyNonNumeric() {
+    this.modalData = this.modalData.replace(/\D/g, '');
+    if (Number.parseInt(this.modalData) > 100) {
+      this.modalData = '100';
+    }
+  }
 }

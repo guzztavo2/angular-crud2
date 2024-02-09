@@ -1,10 +1,17 @@
-<app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
-    [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"
-    [title]="this.modalAdicionar.title" [description]="this.modalAdicionar.description"
-    [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"
-    (modalVisibleEvent)="this.modalAdicionar.setVisibleModal($event)" (data)="this.addInformation($event)"></app-modal>
+<div class="h-100 w-100 container d-flex flex-column overflow-auto">
 
-<div class="h-100 w-100 container d-flex flex-column">
+    <app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
+        [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"
+        [title]="this.modalAdicionar.title" [description]="this.modalAdicionar.description"
+        [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"
+        (modalVisibleEvent)="this.modalAdicionar.setVisibleModal($event)"
+        (data)="this.addInformation($event)"></app-modal>
+
+    <app-modal *ngIf="this.modalGerar.display" [modalVisible]="!this.modalGerar.visibility"
+        [showFooter]="this.modalGerar.showFooter" [canClose]="this.modalGerar.canClose" [title]="this.modalGerar.title"
+        [description]="this.modalGerar.description" [loading]="this.modalGerar.loadingIcon"
+        [modal_type]="'gerar_informacao'" (modalVisibleEvent)="this.modalGerar.setVisibleModal($event)"
+        (data)="this.generateInformations($event)"></app-modal>
     <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
 
     <form action="" class="d-flex flex-row col-12 flex-wrap my-2  p-1 rounded" method="get">
@@ -15,12 +22,22 @@
     <div class="d-flex flex-row col-12 flex-wrap justify-content-around">
         <button class="btn btn-outline-primary" (click)="this.adicionarInformacao()">Adicionar/Criar nova
             informação</button>
-        <button class="btn btn-outline-success">Gerar Informações</button>
+        <button class="btn btn-outline-success" (click)="this.gerarInformacao()">Gerar Informações</button>
         <button class="btn btn-outline-danger">Deletar Informações</button>
     </div>
 
     <h1 class="text-uppercase fs-5 my-1 py-2 border-bottom">Informações</h1>
 
+    <div class="d-flex flex-column col-12 align-items-end">
+        <h5 class="m-2 fw-bold fs-6">Por página:</h5>
+        <select (change)="setPaginate($event)" class="form-select w-50" aria-label="Default select example">
+            <option value="5">5</option>
+            <option selected value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+        </select>
+    </div>
 
     <table class="table table-hover">
         <thead>
@@ -34,7 +51,8 @@
         <tbody *ngFor="let informacao of this.informacoes">
             <tr>
                 <th scope="row">{{informacao.getId()}}</th>
-                <td>{{informacao.getName()}}</td>
+                <td>{{informacao.getName().length > 50 ? informacao.getName().slice(0, 50) + "..." :
+                    informacao.getName()}}</td>
                 <td>{{informacao.getCreatedAt()}}</td>
                 <td>{{informacao.getUpdatedAt()}}</td>
             </tr>
