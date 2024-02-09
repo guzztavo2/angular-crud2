@@ -14,10 +14,11 @@ export class HomeComponent {
 
   public modalAdicionar: Modal;
   public modalGerar: Modal;
+  public modalEditar: Modal;
   public dataModal = null;
   public actual_page = 1;
   public per_page = 10;
-
+  public editarInformacao: Informacao | undefined = undefined;
   public informacoes: Informacao[];
 
   constructor() {
@@ -41,7 +42,19 @@ export class HomeComponent {
     this.modalGerar.loadingIcon = false;
     this.modalGerar.redirect = false;
 
+    this.modalEditar = new Modal();
+    this.modalEditar.title = "";
+    this.modalEditar.description = "";
+    this.modalEditar.canClose = true;
+    this.modalEditar.showFooter = true;
+    this.modalEditar.visibility = false;
+    this.modalEditar.display = false;
+    this.modalEditar.loadingIcon = false;
+    this.modalEditar.redirect = false;
+    
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
+
+    this.editarInformacaoModal();
 
   }
 
@@ -78,6 +91,12 @@ export class HomeComponent {
   gerarInformacao() {
     this.modalGerar.setVisibleModal(true);
   }
+
+  editarInformacaoModal() {
+    this.editarInformacao = this.informacoes[0];
+    this.modalEditar.setVisibleModal(true);
+  }
+
   addInformation(data: string) {
     Informacao.create(data);
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
@@ -86,5 +105,10 @@ export class HomeComponent {
   generateInformations(data: string) {
     Informacao.generateInformations(Number.parseInt(data));
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
+  }
+
+  editInformation(data: string) {
+    if (this.editarInformacao !== undefined)
+      Informacao.update((this.editarInformacao as Informacao).getId(), data);
   }
 }

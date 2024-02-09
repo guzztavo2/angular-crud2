@@ -14,6 +14,14 @@
         (data)="this.generateInformations($event)"></app-modal>
     <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
 
+    <app-modal *ngIf="this.modalEditar.display" [modalVisible]="!this.modalEditar.visibility"
+        [showFooter]="this.modalEditar.showFooter" [canClose]="this.modalEditar.canClose"
+        [title]="this.modalEditar.title" [description]="this.modalEditar.description"
+        [loading]="this.modalEditar.loadingIcon" [modal_type]="'editar_informacao'" [informacao]="this.editarInformacao"
+        (modalVisibleEvent)="this.modalEditar.setVisibleModal($event)"
+        (data)="this.editInformation($event)"></app-modal>
+    <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
+
     <form action="" class="d-flex flex-row col-12 flex-wrap my-2  p-1 rounded" method="get">
         <h1 class="m-0 p-0 text-uppercase fs-6 fw-bold my-1 col-12">Filtro de informações</h1>
 

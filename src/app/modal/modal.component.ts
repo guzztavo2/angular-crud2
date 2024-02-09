@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Informacao from '../Informacao/Informacao';
 
 @Component({
   selector: 'app-modal',
@@ -17,16 +18,25 @@ export class ModalComponent implements OnInit {
   @Input() canClose: boolean = true;
   @Input() loading: boolean = true;
   @Input() redirect: string | false = false;
+  @Input() informacao: Informacao | undefined = undefined;
   @Input() modal_type: string | false = false;
   @Output() modalVisibleEvent = new EventEmitter<boolean>();
   @Output() data = new EventEmitter<any>();
 
   public backDropVisibleClass: string = '';
   public modalVisibleClass: string = '';
+  public dataAtualizacao: string | undefined = undefined;
 
   ngOnInit(): void {
     this.clickEvent();
     this.setModalVisibility(this.modalVisible);
+    if (this.informacao !== undefined) {
+      this.modalData = this.informacao.getName();
+      this.dataAtualizacao = (new Date()).toLocaleString('br')
+      setInterval(() => {
+        this.dataAtualizacao = (new Date()).toLocaleString('br')
+      }, 1000);
+    }
   }
 
   clickEvent() {
