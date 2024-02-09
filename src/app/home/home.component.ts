@@ -18,6 +18,9 @@ export class HomeComponent {
   public actual_page = 1;
 
   public informacoes: Informacao[];
+
+  public pagination: {};
+
   constructor() {
     this.modalAdicionar = new Modal();
     this.modalAdicionar.title = "";
@@ -39,16 +42,26 @@ export class HomeComponent {
     this.modalGerar.loadingIcon = false;
     this.modalGerar.redirect = false;
 
-
+    this.pagination = {};
     this.informacoes = this.paginateData(10, 1);
+
   }
 
   private paginateData(per_page: number, actualPage: number) {
     const data = Informacao.get_all();
+
+    const pagination = Math.ceil(data.length / per_page);
+   
+    this.pagination = {
+      previous_page: this.actual_page == 1 ? 1 : this.actual_page - 1,
+      actual_page: this.actual_page,
+
+    };
+
     return data.slice((actualPage - 1) * per_page, actualPage * per_page);
   }
 
-  setPaginate(event = null) {
+  setPaginate(event: Event | null = null) {
     let per_page = 10;
 
     if (event !== null) {

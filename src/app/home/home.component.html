@@ -30,13 +30,17 @@
 
     <div class="d-flex flex-column col-12 align-items-end">
         <h5 class="m-2 fw-bold fs-6">Por página:</h5>
-        <select (change)="setPaginate($event)" class="form-select w-50" aria-label="Default select example">
+        <select (change)="setPaginate($event)" class="form-select w-25">
             <option value="5">5</option>
             <option selected value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>
             <option value="25">25</option>
         </select>
+    </div>
+    <div class="d-flex flex-column col-12 align-items-end">
+        <h5 class="m-2 fw-bold fs-6">Selecionar mais de uma informação:</h5>
+
     </div>
 
     <table class="table table-hover">
@@ -46,6 +50,7 @@
                 <th class="cursor-pointer" scope="col">Informação</th>
                 <th class="cursor-pointer" scope="col">Created_at</th>
                 <th class="cursor-pointer" scope="col">Updated_at</th>
+                <th class="cursor-pointer" scope="col">Ações</th>
             </tr>
         </thead>
         <tbody *ngFor="let informacao of this.informacoes">
@@ -55,9 +60,22 @@
                     informacao.getName()}}</td>
                 <td>{{informacao.getCreatedAt()}}</td>
                 <td>{{informacao.getUpdatedAt()}}</td>
-            </tr>
+                <td><i class="bi bi-pencil-square ms-1 cursor-pointer"></i><i
+                        class="bi bi-trash ms-1 cursor-pointer"></i>
 
+                </td>
+            </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Voltar</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+        </ul>
+    </nav>
+
 
 </div>
