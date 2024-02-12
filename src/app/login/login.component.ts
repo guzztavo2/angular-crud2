@@ -22,6 +22,8 @@ import { ModalComponent } from '../modal/modal.component';
 export class LoginComponent {
   private router: Router;
   private authService: AuthService;
+  public loadingModal: Modal;
+  public modalMessage: Modal;
   constructor(authService: AuthService, router: Router) {
     this.router = router;
     this.authService = authService;
@@ -31,33 +33,29 @@ export class LoginComponent {
         this.router.navigateByUrl('/');
       }
     });
+
+    this.loadingModal = new Modal('Sua requisição está sendo carregada! ⏳',
+      '',
+      false,
+      false,
+      false,
+      false,
+      true,
+      undefined);
+
+    this.modalMessage = new Modal('Sua requisição está sendo carregada! ⏳',
+      '',
+      false,
+      false,
+      false,
+      false,
+      true,
+      undefined);
+
+    this.modalMessage.canClose = true;
+
   }
-  public loadingModal: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: false,
-    showFooter: false,
-    visibility: false,
-    display: false,
-    loadingIcon: true,
-    redirect: false,
-    setVisibleModal: function (val: boolean): void {
-      this.setVisibleModal(val);
-    }
-  };
-  public modalMessage: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: true,
-    showFooter: true,
-    visibility: false,
-    display: false,
-    loadingIcon: false,
-    redirect: false,
-    setVisibleModal: function (val: boolean): void {
-      this.setVisibleModal(val);
-    }
-  };
+
 
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -66,15 +64,6 @@ export class LoginComponent {
     ]),
     password: new FormControl('', [Validators.required]),
   });
-
-  visibilityModal(val: boolean) {
-    this.modalMessage.visibility = val;
-
-    setTimeout(() => {
-      this.modalMessage.display = val;
-    }, 500);
-  }
-
 
   submitForm() {
     this.loadingModal.display = true;

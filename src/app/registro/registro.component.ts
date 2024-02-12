@@ -19,32 +19,9 @@ import User from '../auth/user';
   templateUrl: './registro.component.html',
 })
 export class RegistroComponent {
-  public loadingModal: Modal = {
-    title: 'Sua requisição está sendo carregada! ⏳',
-    description: '',
-    canClose: false,
-    showFooter: false,
-    visibility: false,
-    display: false,
-    loadingIcon: true,
-    redirect: false,
-    setVisibleModal: function (val: boolean): void {
-    }
-  };
 
-  public messageModal: Modal = {
-    title: 'Tudo certo, você foi registrado! ✔',
-    description: 'Ao clicar em OK, você será redirecionado para o menu!',
-    canClose: true,
-    showFooter: true,
-    visibility: false,
-    display: false,
-    loadingIcon: false,
-    redirect: '/',
-    setVisibleModal: function (val: boolean): void {
-    }
-  };
-
+  loadingModal: Modal;
+  messageModal: Modal;
   private authService: AuthService;
 
   private router: Router;
@@ -58,6 +35,27 @@ export class RegistroComponent {
         this.router.navigateByUrl('/');
       }
     });
+
+    this.loadingModal = new Modal();
+    this.messageModal = new Modal();
+
+    this.loadingModal.title = 'Sua requisição está sendo carregada! ⏳';
+    this.loadingModal.description = '';
+    this.loadingModal.canClose = false;
+    this.loadingModal.showFooter = false;
+    this.loadingModal.visibility = false;
+    this.loadingModal.display = false;
+    this.loadingModal.loadingIcon = true;
+    this.loadingModal.redirect = false;
+
+    this.messageModal.title = 'Tudo certo, você foi registrado! ✔';
+    this.messageModal.description = 'Ao clicar em OK, você será redirecionado para o menu!';
+    this.messageModal.canClose = true;
+    this.messageModal.showFooter = true;
+    this.messageModal.visibility = false;
+    this.messageModal.display = false;
+    this.messageModal.loadingIcon = false;
+    this.messageModal.redirect = '/';
   }
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -80,34 +78,45 @@ export class RegistroComponent {
   }
 
   submitForm() {
-    this.loadingModal.display = true;
-    this.loadingModal.visibility = true;
+    this.loadingModal.setVisibleModal(true);
 
-    new Promise((success) => {
-      setTimeout(() => {
+    if (this.registerForm.status == 'VALID') {
+      new Promise((success) => {
+        setTimeout(() => {
+          this.loadingModal.visibility = false;
+          setTimeout(() => {
+            this.loadingModal.display = false;
+            success(true);
+          }, 500);
+        }, 1000);
+      }).then((_) => {
+        this.messageModal.display = true;
+        this.messageModal.visibility = true;
+
+        const user = new User(
+          this.registerForm.get('name')?.value as string,
+          this.registerForm.get('email')?.value as string,
+          this.registerForm.get('password')?.value as string
+        );
+        User.setUser(user);
         this.loadingModal.visibility = false;
         setTimeout(() => {
           this.loadingModal.display = false;
-          success(true);
         }, 500);
-      }, 1000);
-    }).then((_) => {
-      this.messageModal.display = true;
-      this.messageModal.visibility = true;
 
-      const user = new User(
-        this.registerForm.get('name')?.value as string,
-        this.registerForm.get('email')?.value as string,
-        this.registerForm.get('password')?.value as string
-      );
-      User.setUser(user);
-      this.loadingModal.visibility = false;
-      setTimeout(() => {
-        this.loadingModal.display = false;
-      }, 500);
+        this.messageModal.title = 'Tudo certo, você foi registrado! ✔';
+        this.messageModal.description = 'Ao clicar em OK, você será redirecionado para o menu!';
+        this.messageModal.redirect = '/';
 
-      this.messageModal.display = true;
-      this.messageModal.visibility = true;
-    });
+        this.messageModal.setVisibleModal(true);
+      });
+    } else {
+      this.loadingModal.setVisibleModal(false);
+
+      this.messageModal.title = "Você precisa preencher o formulário corretamente:";
+      this.messageModal.description = "O formulário ainda não foi preenchido, assim que verificar os problemas, poderá prosseguir.";
+      this.messageModal.redirect = false;
+      this.messageModal.setVisibleModal(true);
+    }
   }
 }

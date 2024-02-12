@@ -16,11 +16,11 @@ export const routes: Routes = [
   },
   {
     path: 'logout',
-    component: LogoutComponent,
+    component: LogoutComponent, canActivate: [authGuard],
   },
   {
     path: 'configuracoes',
-    component: ConfiguracaoComponent,
+    component: ConfiguracaoComponent, canActivate: [authGuard],
   },
   { path: '**', component: PageNotFoundComponent },
 ];

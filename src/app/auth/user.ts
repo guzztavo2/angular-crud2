@@ -68,6 +68,7 @@ export default class User {
 
   static getActualUser(): User | null {
     var user = localStorage.getItem('user');
+
     if (user !== null) {
       user = JSON.parse(user);
       return new User(

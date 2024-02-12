@@ -1,13 +1,16 @@
 <div class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center">
-  <app-modal *ngIf="this.modalMessage.display" [modalVisible]="this.modalMessage.visibility"
+
+  <app-modal *ngIf="this.modalMessage.display" [modalVisible]="!this.modalMessage.visibility"
     [showFooter]="this.modalMessage.showFooter" [canClose]="this.modalMessage.canClose"
     [title]="this.modalMessage.title" [description]="this.modalMessage.description"
-    [loading]="this.modalMessage.loadingIcon" (modalVisibleEvent)="visibilityModal($event)"></app-modal>
+    [loading]="this.modalMessage.loadingIcon"
+    (modalVisibleEvent)="this.modalMessage.setVisibleModal($event)"></app-modal>
 
   <app-modal *ngIf="this.loadingModal.display" [modalVisible]="!this.loadingModal.visibility"
     [showFooter]="this.loadingModal.showFooter" [canClose]="this.loadingModal.canClose"
     [title]="this.loadingModal.title" [description]="this.loadingModal.description"
-    [loading]="this.loadingModal.loadingIcon"></app-modal>
+    [loading]="this.loadingModal.loadingIcon"
+    (modalVisibleEvent)="this.loadingModal.setVisibleModal($event)"></app-modal>
 
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">LOGIN</h1>
   <div class="w-50 border p-2 shadow-sm d-flex flex-column">

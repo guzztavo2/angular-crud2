@@ -1,6 +1,4 @@
-<div
-  class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center"
->
+<div class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center">
   <!-- <app-modal
     *ngIf="successModal"
     [modalVisible]="!successModal"
@@ -10,25 +8,17 @@
     "
     [canClose]="true"
   ></app-modal> -->
-  <app-modal
-    *ngIf="this.loadingModal.display"
-    [modalVisible]="!this.loadingModal.visibility"
-    [showFooter]="this.loadingModal.showFooter"
-    [canClose]="this.loadingModal.canClose"
-    [title]="this.loadingModal.title"
-    [description]="this.loadingModal.description"
+  <app-modal *ngIf="this.loadingModal.display" [modalVisible]="!this.loadingModal.visibility"
+    [showFooter]="this.loadingModal.showFooter" [canClose]="this.loadingModal.canClose"
+    [title]="this.loadingModal.title" [description]="this.loadingModal.description"
     [loading]="this.loadingModal.loadingIcon"
-  ></app-modal>
-  <app-modal
-    *ngIf="this.messageModal.display"
-    [modalVisible]="!this.messageModal.visibility"
-    [showFooter]="this.messageModal.showFooter"
-    [canClose]="this.messageModal.canClose"
-    [title]="this.messageModal.title"
-    [description]="this.messageModal.description"
-    [loading]="this.messageModal.loadingIcon"
-    [redirect]="this.messageModal.redirect"
-  ></app-modal>
+    (modalVisibleEvent)="this.loadingModal.setVisibleModal($event)"></app-modal>
+  <app-modal *ngIf="this.messageModal.display" [modalVisible]="!this.messageModal.visibility"
+    [showFooter]="this.messageModal.showFooter" [canClose]="this.messageModal.canClose"
+    [title]="this.messageModal.title" [description]="this.messageModal.description"
+    [loading]="this.messageModal.loadingIcon" [redirect]="this.messageModal.redirect"
+    (modalVisibleEvent)="this.messageModal.setVisibleModal($event)"></app-modal>
+
 
   <h1 class="w-50 text-uppercase fw-light m-0 p-0">Registro</h1>
 
@@ -37,28 +27,15 @@
       Seja bem vindo,
       <span class="fw-normal text-lowercase">registre seu usuário aqui:</span>
     </h1>
-    <form
-      (ngSubmit)="submitForm()"
-      [formGroup]="registerForm"
-      action=""
-      class="w-100 d-flex flex-column"
-    >
+    <form (ngSubmit)="submitForm()" [formGroup]="registerForm" action="" class="w-100 d-flex flex-column">
       <label for="name" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Nome *</p>
-        <input
-          type="text"
-          formControlName="name"
-          id="name"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input type="text" formControlName="name" id="name" class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.registerForm.get('name') &&
             (this.registerForm.get('name')?.dirty ||
               this.registerForm.get('name')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
+          " class="fs-6 text-danger">
           <div *ngIf="this.registerForm.get('name')?.errors?.['required']">
             O nome é um requisito.
           </div>
@@ -69,20 +46,12 @@
       </label>
       <label for="email" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">E-mail *</p>
-        <input
-          type="text"
-          formControlName="email"
-          id="email"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input type="text" formControlName="email" id="email" class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.registerForm.get('email') &&
             (this.registerForm.get('email')?.dirty ||
               this.registerForm.get('email')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
+          " class="fs-6 text-danger">
           <div *ngIf="this.registerForm.get('email')?.errors?.['required']">
             O campo e-mail é um requisito.
           </div>
@@ -93,78 +62,46 @@
       </label>
       <label for="password" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Senha *</p>
-        <input
-          value=""
-          type="password"
-          formControlName="password"
-          id="password"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input value="" type="password" formControlName="password" id="password"
+          class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.registerForm.get('password') &&
             (this.registerForm.get('password')?.dirty ||
               this.registerForm.get('password')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
+          " class="fs-6 text-danger">
           <div *ngIf="this.registerForm.get('password')?.errors?.['required']">
             O campo senha é um requisito.
           </div>
           <div
-            *ngIf="this.registerForm.get('password')?.errors?.['pattern'] || this.registerForm.get('password')?.errors?.['minlength']"
-          >
+            *ngIf="this.registerForm.get('password')?.errors?.['pattern'] || this.registerForm.get('password')?.errors?.['minlength']">
             O campo senha é necessário ter: uma letra minúscula, uma letra
             maiuscula e ao menos um número e 5 caracteres.
           </div>
         </div>
       </label>
-      <label
-        *ngIf="this.getPasswordValue().length > 0"
-        for="confirmPassword"
-        class="w-100 d-block my-1"
-      >
+      <label *ngIf="this.getPasswordValue().length > 0" for="confirmPassword" class="w-100 d-block my-1">
         <p class="fs-6 fw-bolder m-0">Confirme a senha *</p>
-        <input
-          value=""
-          type="password"
-          formControlName="confirmPassword"
-          id="confirmPassword"
-          class="fs-6 p-2 border shadow-sm rounded w-100"
-        />
-        <div
-          *ngIf="
+        <input value="" type="password" formControlName="confirmPassword" id="confirmPassword"
+          class="fs-6 p-2 border shadow-sm rounded w-100" />
+        <div *ngIf="
             this.registerForm.get('confirmPassword') &&
             (this.registerForm.get('confirmPassword')?.dirty ||
               this.registerForm.get('confirmPassword')?.touched)
-          "
-          class="fs-6 text-danger"
-        >
-          <div
-            *ngIf="this.registerForm.get('confirmPassword')?.errors?.['required']"
-          >
+          " class="fs-6 text-danger">
+          <div *ngIf="this.registerForm.get('confirmPassword')?.errors?.['required']">
             O campo para confirmar a senha é um requisito.
           </div>
-          <div
-            *ngIf="
+          <div *ngIf="
               this.registerForm.get('confirmPassword')?.value !==
               this.registerForm.get('password')?.value
-            "
-          >
+            ">
             O campo senha e de confirmar senha precisam estar iguais.
           </div>
         </div>
       </label>
-      <input
-        class="btn btn-primary p-1 text-light my-2"
-        type="submit"
-        value="Registrar"
-      />
+      <input class="btn btn-primary p-1 text-light my-2" type="submit" value="Registrar" />
     </form>
-    <a
-      routerLink="/login"
-      class="fw-bold text-light teext-center fs-6 my-2 btn btn-success w-50"
-      >Acesse a tela de login</a
-    >
+    <a routerLink="/login" class="fw-bold text-light teext-center fs-6 my-2 btn btn-success w-50">Acesse a tela de
+      login</a>
   </div>
 </div>
