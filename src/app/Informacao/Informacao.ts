@@ -224,13 +224,16 @@ export default class Informacao {
     private static findById(id: number): Informacao | undefined {
         return this.get_all().find((value: Informacao) => value.id == id)
     }
+    public delete() {
+        Informacao.removeFromId(this.id);
+    }
     private static removeFromId(id: number): boolean {
         const data = this.get_all();
         const keyToRemove = data.findIndex((value: Informacao) => value.id == id);
         if (keyToRemove !== null) {
             delete data[keyToRemove];
 
-            this.set_all(data.filter((user) => user !== undefined));
+            this.set_all(data.filter((informacao) => informacao !== undefined));
             return true;
         }
 

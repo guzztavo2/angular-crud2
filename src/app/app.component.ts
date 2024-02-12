@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/auth.service';
@@ -12,14 +12,26 @@ import User from './auth/user';
   templateUrl: 'app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   authService: AuthService;
+  isLoading = true;
   public user!: User;
   constructor(authService: AuthService) {
     this.authService = authService;
-    this.authService.currentUser.subscribe(user => {
-      this.user = (user as any);
-    })
+
+    new Promise(resolve => {
+      this.authService.currentUser.subscribe(user => {
+        this.user = (user as any);
+      })
+      setTimeout(() => {
+        resolve("");
+      }, 500);
+    }).finally(() => {
+      this.isLoading = false;
+    });
+  }
+  ngOnInit(): void {
+    // this.isLoading = false;
   }
 
 

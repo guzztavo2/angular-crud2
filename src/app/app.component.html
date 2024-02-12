@@ -29,6 +29,8 @@
     </div>
   </header>
   <div class="w-100 h-100 d-flex flex-column overflow-auto">
+    <div *ngIf="isLoading" style="position: absolute; left:0; top:0; z-index: 999;" class="w-100 h-100 top-0 left-0 bg-white"></div>
+
     <router-outlet></router-outlet>
   </div>
   <footer class="bg-success shadow-sm p-2 w-100">
