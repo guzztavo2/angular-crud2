@@ -32,11 +32,11 @@ export class LoginComponent {
 
     new Promise((resolve) => {
       this.authService.login().subscribe((isLoggedIn) => {
-        if (isLoggedIn) {
+        if (isLoggedIn)
           this.router.navigateByUrl('/');
-        } else {
+        else
           resolve("")
-        }
+
       });
     }).then(resolve => {
       this.isLoading = false;

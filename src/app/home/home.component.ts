@@ -203,6 +203,7 @@ export class HomeComponent implements OnInit {
   editInformation(data: string) {
     if (this.editarInformacao !== undefined)
       Informacao.update((this.editarInformacao as Informacao).getId(), data);
+    this.informacoes = this.paginateData(this.per_page, this.actual_page);
   }
   deleteInformation(data: string) {
     if (this.deletarInformacao !== undefined)
