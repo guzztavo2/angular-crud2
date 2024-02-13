@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Informacao from '../Informacao/Informacao';
 import { Modal } from '../modal/modal';
 import { ModalComponent } from '../modal/modal.component';
@@ -11,8 +11,12 @@ import { LoadingComponent } from '../loading/loading.component';
   imports: [ModalComponent, CommonModule, FormsModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  isLoading = true;
 
+  ngOnInit(): void {
+    this.isLoading = false;
+  }
   public modalAdicionar: Modal;
   public modalGerar: Modal;
   public modalEditar: Modal;

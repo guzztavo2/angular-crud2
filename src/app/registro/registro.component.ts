@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   FormControl,
@@ -19,7 +19,13 @@ import { LoadingComponent } from '../loading/loading.component';
   imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent, LoadingComponent],
   templateUrl: './registro.component.html',
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
+  isLoading = true;
+
+
+  ngOnInit(): void {
+    this.isLoading = false;
+  }
 
   loadingModal: Modal;
   messageModal: Modal;

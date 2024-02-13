@@ -1,5 +1,5 @@
-<div class="h-100 w-100 position-relative container d-flex flex-column justify-content-center align-items-center">
-  <app-loading></app-loading>
+<div class="h-100 w-100  container d-flex flex-column justify-content-center align-items-center">
+  <app-loading [isLoading]="isLoading"></app-loading>
 
   <app-modal *ngIf="this.modalMessage.display" [modalVisible]="!this.modalMessage.visibility"
     [showFooter]="this.modalMessage.showFooter" [canClose]="this.modalMessage.canClose"

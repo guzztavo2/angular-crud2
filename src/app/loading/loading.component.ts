@@ -9,9 +9,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './loading.component.html'
 })
 export class LoadingComponent implements OnInit {
-  ngOnInit(): void {
-    this.isLoading = false;
 
+  ngOnInit(): void {
+    setTimeout(() => {
+      // this.isLoading = false;
+    }, 1000);
   }
   @Input() isLoading: boolean = true;
 }

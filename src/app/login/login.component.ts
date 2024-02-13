@@ -25,15 +25,24 @@ export class LoginComponent {
   private authService: AuthService;
   public loadingModal: Modal;
   public modalMessage: Modal;
+  isLoading = true;
   constructor(authService: AuthService, router: Router) {
     this.router = router;
     this.authService = authService;
 
-    this.authService.login().subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        this.router.navigateByUrl('/');
-      }
+    new Promise((resolve) => {
+      this.authService.login().subscribe((isLoggedIn) => {
+        if (isLoggedIn) {
+          this.router.navigateByUrl('/');
+        } else {
+          resolve("")
+        }
+      });
+    }).then(resolve => {
+      this.isLoading = false;
     });
+
+
 
     this.loadingModal = new Modal('Sua requisição está sendo carregada! ⏳',
       '',
@@ -56,6 +65,7 @@ export class LoginComponent {
     this.modalMessage.canClose = true;
 
   }
+
 
 
   loginForm = new FormGroup({

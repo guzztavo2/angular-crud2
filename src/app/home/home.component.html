@@ -1,6 +1,6 @@
-<div class="h-100 w-100 position-relative">
+<div class="h-100 w-100 ">
     <div class="container h-100 w-100 d-flex flex-column overflow-auto">
-        <app-loading></app-loading>
+        <app-loading [isLoading]="isLoading"></app-loading>
 
         <app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
             [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"

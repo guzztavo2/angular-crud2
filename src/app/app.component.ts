@@ -4,17 +4,19 @@ import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 import { RouterLink } from '@angular/router';
 import User from './auth/user';
+import { LoadingComponent } from './loading/loading.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, RouterOutlet, RouterLink, LoadingComponent],
   templateUrl: 'app.component.html',
-  styleUrl: './app.component.css',
+
 })
 export class AppComponent implements OnInit {
-  authService: AuthService;
   isLoading = true;
+
+  authService: AuthService;
   public user!: User;
   constructor(authService: AuthService) {
     this.authService = authService;
@@ -31,7 +33,7 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    // this.isLoading = false;
+    this.isLoading = false;
   }
 
 
