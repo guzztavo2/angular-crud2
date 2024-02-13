@@ -12,10 +12,11 @@ import { Modal } from '../modal/modal';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import User from '../auth/user';
+import { LoadingComponent } from '../loading/loading.component';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent, LoadingComponent],
   templateUrl: './registro.component.html',
 })
 export class RegistroComponent {

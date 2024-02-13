@@ -1,122 +1,128 @@
-<div class="h-100 w-100 container d-flex flex-column overflow-auto">
+<div class="h-100 w-100 position-relative">
+    <div class="container h-100 w-100 d-flex flex-column overflow-auto">
+        <app-loading></app-loading>
 
-    <app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
-        [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"
-        [title]="this.modalAdicionar.title" [description]="this.modalAdicionar.description"
-        [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"
-        (modalVisibleEvent)="this.modalAdicionar.setVisibleModal($event)"
-        (data)="this.addInformation($event)"></app-modal>
+        <app-modal *ngIf="this.modalAdicionar.display" [modalVisible]="!this.modalAdicionar.visibility"
+            [showFooter]="this.modalAdicionar.showFooter" [canClose]="this.modalAdicionar.canClose"
+            [title]="this.modalAdicionar.title" [description]="this.modalAdicionar.description"
+            [loading]="this.modalAdicionar.loadingIcon" [modal_type]="'adicionar_informacao'"
+            (modalVisibleEvent)="this.modalAdicionar.setVisibleModal($event)"
+            (data)="this.addInformation($event)"></app-modal>
 
-    <app-modal *ngIf="this.deletarModal.display" [modalVisible]="!this.deletarModal.visibility"
-        [showFooter]="this.deletarModal.showFooter" [canClose]="this.deletarModal.canClose"
-        [title]="this.deletarModal.title" [description]="this.deletarModal.description"
-        [loading]="this.deletarModal.loadingIcon" [modal_type]="'deletar_informacao'"
-        [informacao]="this.deletarInformacao" (modalVisibleEvent)="this.deletarModal.setVisibleModal($event)"
-        (data)="this.deleteInformation($event)"></app-modal>
+        <app-modal *ngIf="this.deletarModal.display" [modalVisible]="!this.deletarModal.visibility"
+            [showFooter]="this.deletarModal.showFooter" [canClose]="this.deletarModal.canClose"
+            [title]="this.deletarModal.title" [description]="this.deletarModal.description"
+            [loading]="this.deletarModal.loadingIcon" [modal_type]="'deletar_informacao'"
+            [informacao]="this.deletarInformacao" (modalVisibleEvent)="this.deletarModal.setVisibleModal($event)"
+            (data)="this.deleteInformation($event)"></app-modal>
 
-    <app-modal *ngIf="this.visualizarModal.display" [modalVisible]="!this.visualizarModal.visibility"
-        [showFooter]="this.visualizarModal.showFooter" [canClose]="this.visualizarModal.canClose"
-        [title]="this.visualizarModal.title" [description]="this.visualizarModal.description"
-        [loading]="this.visualizarModal.loadingIcon" [modal_type]="'visualizar_informacao'"
-        [informacao]="this.visualizarInformacao" (data)="this.visualizarInformacaoFunc($event)"
-        (modalVisibleEvent)="this.visualizarModal.setVisibleModal($event)"></app-modal>
+        <app-modal *ngIf="this.visualizarModal.display" [modalVisible]="!this.visualizarModal.visibility"
+            [showFooter]="this.visualizarModal.showFooter" [canClose]="this.visualizarModal.canClose"
+            [title]="this.visualizarModal.title" [description]="this.visualizarModal.description"
+            [loading]="this.visualizarModal.loadingIcon" [modal_type]="'visualizar_informacao'"
+            [informacao]="this.visualizarInformacao" (data)="this.visualizarInformacaoFunc($event)"
+            (modalVisibleEvent)="this.visualizarModal.setVisibleModal($event)"></app-modal>
 
-    <app-modal *ngIf="this.modalGerar.display" [modalVisible]="!this.modalGerar.visibility"
-        [showFooter]="this.modalGerar.showFooter" [canClose]="this.modalGerar.canClose" [title]="this.modalGerar.title"
-        [description]="this.modalGerar.description" [loading]="this.modalGerar.loadingIcon"
-        [modal_type]="'gerar_informacao'" (modalVisibleEvent)="this.modalGerar.setVisibleModal($event)"
-        (data)="this.generateInformations($event)"></app-modal>
+        <app-modal *ngIf="this.modalGerar.display" [modalVisible]="!this.modalGerar.visibility"
+            [showFooter]="this.modalGerar.showFooter" [canClose]="this.modalGerar.canClose"
+            [title]="this.modalGerar.title" [description]="this.modalGerar.description"
+            [loading]="this.modalGerar.loadingIcon" [modal_type]="'gerar_informacao'"
+            (modalVisibleEvent)="this.modalGerar.setVisibleModal($event)"
+            (data)="this.generateInformations($event)"></app-modal>
 
-    <app-modal *ngIf="this.modalEditar.display" [modalVisible]="!this.modalEditar.visibility"
-        [showFooter]="this.modalEditar.showFooter" [canClose]="this.modalEditar.canClose"
-        [title]="this.modalEditar.title" [description]="this.modalEditar.description"
-        [loading]="this.modalEditar.loadingIcon" [modal_type]="'editar_informacao'" [informacao]="this.editarInformacao"
-        (modalVisibleEvent)="this.modalEditar.setVisibleModal($event)"
-        (data)="this.editInformation($event)"></app-modal>
-    <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
+        <app-modal *ngIf="this.modalEditar.display" [modalVisible]="!this.modalEditar.visibility"
+            [showFooter]="this.modalEditar.showFooter" [canClose]="this.modalEditar.canClose"
+            [title]="this.modalEditar.title" [description]="this.modalEditar.description"
+            [loading]="this.modalEditar.loadingIcon" [modal_type]="'editar_informacao'"
+            [informacao]="this.editarInformacao" (modalVisibleEvent)="this.modalEditar.setVisibleModal($event)"
+            (data)="this.editInformation($event)"></app-modal>
+        <h1 class="text-uppercase fs-5 my-1 border-bottom">CRUD de Informações</h1>
 
-    <form action="" class="d-flex flex-row col-12 flex-wrap my-2  p-1 rounded" method="get">
-        <h1 class="m-0 p-0 text-uppercase fs-6 fw-bold my-1 col-12">Filtro de informações</h1>
+        <form action="" class="d-flex flex-row col-12 flex-wrap my-2  p-1 rounded" method="get">
+            <h1 class="m-0 p-0 text-uppercase fs-6 fw-bold my-1 col-12">Filtro de informações</h1>
 
-        <input type="text" placeholder="Buscar informação" (keyup)="this.buscarInformacaoFunc($event)"
-            class="col-12 p-2 border rounded" id="">
-    </form>
-    <div class="d-flex flex-row col-12 flex-wrap justify-content-around">
-        <button class="btn btn-outline-primary" (click)="this.adicionarInformacao()">Adicionar/Criar nova
-            informação</button>
-        <button class="btn btn-outline-success" (click)="this.gerarInformacao()">Gerar Informações</button>
-    </div>
+            <input type="text" placeholder="Buscar informação" (keyup)="this.buscarInformacaoFunc($event)"
+                class="col-12 p-2 border rounded" id="">
+        </form>
+        <div class="d-flex flex-row col-12 flex-wrap justify-content-around">
+            <button class="btn btn-outline-primary" (click)="this.adicionarInformacao()">Adicionar/Criar nova
+                informação</button>
+            <button class="btn btn-outline-success" (click)="this.gerarInformacao()">Gerar Informações</button>
+        </div>
 
-    <h1 class="text-uppercase fs-5 my-1 py-2 border-bottom">Informações</h1>
+        <h1 class="text-uppercase fs-5 my-1 py-2 border-bottom">Informações</h1>
 
-    <div class="d-flex flex-column col-12 align-items-end">
-        <h5 class="m-2 fw-bold fs-6">Por página:</h5>
-        <select (change)="setPerPagePaginate($event)" class="form-select w-25">
-            <option value="5">5</option>
-            <option selected value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-        </select>
-    </div>
-    <div class="d-flex flex-column col-12 align-items-end">
-        <h5 class="m-2 fw-bold fs-6">Selecionar mais de uma informação:</h5>
+        <div class="d-flex flex-column col-12 align-items-end">
+            <h5 class="m-2 fw-bold fs-6">Por página:</h5>
+            <select (change)="setPerPagePaginate($event)" class="form-select w-25">
+                <option value="5">5</option>
+                <option selected value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+            </select>
+        </div>
+        <div class="d-flex flex-column col-12 align-items-end">
+            <h5 class="m-2 fw-bold fs-6">Selecionar mais de uma informação:</h5>
 
-    </div>
+        </div>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th class="cursor-pointer"
-                    (click)="setSortBy('id', this.sortBy[0] == 'id' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
-                    scope="col">Id <i *ngIf="this.sortBy[0] == 'id' && this.sortBy[1] == 'desc'"
-                        class="bi bi-arrow-up-short"></i>
-                    <i *ngIf="this.sortBy[0] == 'id' && this.sortBy[1] == 'asc'" class="bi bi-arrow-down-short"></i>
-                </th>
-                <th (click)="setSortBy('name', this.sortBy[0] == 'name' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
-                    class="cursor-pointer" scope="col">Informação
-                    <i *ngIf="this.sortBy[0] == 'name' && this.sortBy[1] == 'desc'" class="bi bi-arrow-up-short"></i>
-                    <i *ngIf="this.sortBy[0] == 'name' && this.sortBy[1] == 'asc'" class="bi bi-arrow-down-short"></i>
-                </th>
-                <th (click)="setSortBy('created_at', this.sortBy[0] == 'created_at' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
-                    class="cursor-pointer" scope="col">Criado em
-                    <i *ngIf="this.sortBy[0] == 'created_at' && this.sortBy[1] == 'desc'"
-                        class="bi bi-arrow-up-short"></i>
-                    <i *ngIf="this.sortBy[0] == 'created_at' && this.sortBy[1] == 'asc'"
-                        class="bi bi-arrow-down-short"></i>
-                </th>
-                <th (click)="setSortBy('updated_at', this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
-                    class="cursor-pointer" scope="col">Atualizado em
-                    <i *ngIf="this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'desc'"
-                        class="bi bi-arrow-up-short"></i>
-                    <i *ngIf="this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'asc'"
-                        class="bi bi-arrow-down-short"></i>
-                </th>
-                <th class="cursor-pointer" scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let informacao of this.informacoes">
-            <tr>
-                <th (click)="this.visualizarInformacaoModal(informacao)" scope="row">{{informacao.getId()}}</th>
-                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getName().length > 50 ?
-                    informacao.getName().slice(0, 50) + "..." :
-                    informacao.getName()}}</td>
-                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getCreatedAt()}}</td>
-                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getUpdatedAt()}}</td>
-                <td><i (click)="editarInformacaoModal(informacao)"
-                        class="bi bi-pencil-square ms-1 cursor-pointer fs-4"></i><i
-                        (click)="deletarInformacaoModal(informacao)" class="bi bi-trash ms-1 cursor-pointer fs-4"></i>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="cursor-pointer"
+                        (click)="setSortBy('id', this.sortBy[0] == 'id' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
+                        scope="col">Id <i *ngIf="this.sortBy[0] == 'id' && this.sortBy[1] == 'desc'"
+                            class="bi bi-arrow-up-short"></i>
+                        <i *ngIf="this.sortBy[0] == 'id' && this.sortBy[1] == 'asc'" class="bi bi-arrow-down-short"></i>
+                    </th>
+                    <th (click)="setSortBy('name', this.sortBy[0] == 'name' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
+                        class="cursor-pointer" scope="col">Informação
+                        <i *ngIf="this.sortBy[0] == 'name' && this.sortBy[1] == 'desc'"
+                            class="bi bi-arrow-up-short"></i>
+                        <i *ngIf="this.sortBy[0] == 'name' && this.sortBy[1] == 'asc'"
+                            class="bi bi-arrow-down-short"></i>
+                    </th>
+                    <th (click)="setSortBy('created_at', this.sortBy[0] == 'created_at' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
+                        class="cursor-pointer" scope="col">Criado em
+                        <i *ngIf="this.sortBy[0] == 'created_at' && this.sortBy[1] == 'desc'"
+                            class="bi bi-arrow-up-short"></i>
+                        <i *ngIf="this.sortBy[0] == 'created_at' && this.sortBy[1] == 'asc'"
+                            class="bi bi-arrow-down-short"></i>
+                    </th>
+                    <th (click)="setSortBy('updated_at', this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'asc' ? 'desc' : 'asc' )"
+                        class="cursor-pointer" scope="col">Atualizado em
+                        <i *ngIf="this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'desc'"
+                            class="bi bi-arrow-up-short"></i>
+                        <i *ngIf="this.sortBy[0] == 'updated_at' && this.sortBy[1] == 'asc'"
+                            class="bi bi-arrow-down-short"></i>
+                    </th>
+                    <th class="cursor-pointer" scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let informacao of this.informacoes">
+                <tr>
+                    <th (click)="this.visualizarInformacaoModal(informacao)" scope="row">{{informacao.getId()}}</th>
+                    <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getName().length > 50 ?
+                        informacao.getName().slice(0, 50) + "..." :
+                        informacao.getName()}}</td>
+                    <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getCreatedAt()}}</td>
+                    <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getUpdatedAt()}}</td>
+                    <td><i (click)="editarInformacaoModal(informacao)"
+                            class="bi bi-pencil-square ms-1 cursor-pointer fs-4"></i><i
+                            (click)="deletarInformacaoModal(informacao)"
+                            class="bi bi-trash ms-1 cursor-pointer fs-4"></i>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item page-link {{page == this.actual_page ? 'active' : '' }} cursor-pointer " *ngFor=" let
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item page-link {{page == this.actual_page ? 'active' : '' }} cursor-pointer " *ngFor=" let
                 page of this.pagination" (click)="setActualPage(page)">{{page}}</li>
-        </ul>
-    </nav>
+            </ul>
+        </nav>
 
-
+    </div>
 </div>

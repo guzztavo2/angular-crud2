@@ -1,4 +1,4 @@
-<div class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center">
+<div class="h-100 w-100 container d-flex flex-column justify-content-center align-items-center position-relative">
   <!-- <app-modal
     *ngIf="successModal"
     [modalVisible]="!successModal"
@@ -8,6 +8,9 @@
     "
     [canClose]="true"
   ></app-modal> -->
+
+  <app-loading></app-loading>
+
   <app-modal *ngIf="this.loadingModal.display" [modalVisible]="!this.loadingModal.visibility"
     [showFooter]="this.loadingModal.showFooter" [canClose]="this.loadingModal.canClose"
     [title]="this.loadingModal.title" [description]="this.loadingModal.description"

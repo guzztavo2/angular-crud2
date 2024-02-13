@@ -12,11 +12,12 @@ import {
 import User from '../auth/user';
 import { Modal } from '../modal/modal';
 import { ModalComponent } from '../modal/modal.component';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ModalComponent, LoadingComponent],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -66,18 +67,16 @@ export class LoginComponent {
   });
 
   submitForm() {
-    this.loadingModal.display = true;
-    this.loadingModal.visibility = true;
+    this.loadingModal.setVisibleModal(true);
 
     if (this.loginForm.status !== 'VALID') {
-      this.loadingModal.visibility = false;
-      this.loadingModal.display = false;
+      this.loadingModal.setVisibleModal(false);
+
 
       this.modalMessage.title = 'Dados inválidos! ☹';
       this.modalMessage.description =
         'Lembre-se de preencher todo o formulário antes de acessar sua conta!';
-      this.modalMessage.display = true;
-      this.modalMessage.visibility = true;
+      this.modalMessage.setVisibleModal(true);
     } else {
       new Promise((success, error) => {
         const user = User.getUserFromUsersList(
@@ -99,14 +98,11 @@ export class LoginComponent {
           this.modalMessage.title = error;
           this.modalMessage.description =
             'Não será possível acessar o painel de administrador, pois o usuário não foi identificado. Tente de novo mais tarde.';
-          this.modalMessage.display = true;
-          this.modalMessage.visibility = true;
+          this.modalMessage.setVisibleModal(true);
+
         })
         .finally(() => {
-          this.loadingModal.visibility = false;
-          setTimeout(() => {
-            this.loadingModal.display = false;
-          }, 500);
+          this.loadingModal.setVisibleModal(false);
         });
     }
   }

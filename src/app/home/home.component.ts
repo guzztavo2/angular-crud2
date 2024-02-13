@@ -4,10 +4,11 @@ import { Modal } from '../modal/modal';
 import { ModalComponent } from '../modal/modal.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingComponent } from '../loading/loading.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ModalComponent, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [ModalComponent, CommonModule, FormsModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
