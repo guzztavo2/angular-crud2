@@ -14,6 +14,13 @@
         [informacao]="this.deletarInformacao" (modalVisibleEvent)="this.deletarModal.setVisibleModal($event)"
         (data)="this.deleteInformation($event)"></app-modal>
 
+    <app-modal *ngIf="this.visualizarModal.display" [modalVisible]="!this.visualizarModal.visibility"
+        [showFooter]="this.visualizarModal.showFooter" [canClose]="this.visualizarModal.canClose"
+        [title]="this.visualizarModal.title" [description]="this.visualizarModal.description"
+        [loading]="this.visualizarModal.loadingIcon" [modal_type]="'visualizar_informacao'"
+        [informacao]="this.visualizarInformacao" (data)="this.visualizarInformacaoFunc($event)"
+        (modalVisibleEvent)="this.visualizarModal.setVisibleModal($event)"></app-modal>
+
     <app-modal *ngIf="this.modalGerar.display" [modalVisible]="!this.modalGerar.visibility"
         [showFooter]="this.modalGerar.showFooter" [canClose]="this.modalGerar.canClose" [title]="this.modalGerar.title"
         [description]="this.modalGerar.description" [loading]="this.modalGerar.loadingIcon"
@@ -90,11 +97,12 @@
         </thead>
         <tbody *ngFor="let informacao of this.informacoes">
             <tr>
-                <th scope="row">{{informacao.getId()}}</th>
-                <td>{{informacao.getName().length > 50 ? informacao.getName().slice(0, 50) + "..." :
+                <th (click)="this.visualizarInformacaoModal(informacao)" scope="row">{{informacao.getId()}}</th>
+                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getName().length > 50 ?
+                    informacao.getName().slice(0, 50) + "..." :
                     informacao.getName()}}</td>
-                <td>{{informacao.getCreatedAt()}}</td>
-                <td>{{informacao.getUpdatedAt()}}</td>
+                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getCreatedAt()}}</td>
+                <td (click)="this.visualizarInformacaoModal(informacao)">{{informacao.getUpdatedAt()}}</td>
                 <td><i (click)="editarInformacaoModal(informacao)"
                         class="bi bi-pencil-square ms-1 cursor-pointer fs-4"></i><i
                         (click)="deletarInformacaoModal(informacao)" class="bi bi-trash ms-1 cursor-pointer fs-4"></i>

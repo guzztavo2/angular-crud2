@@ -16,11 +16,13 @@ export class HomeComponent {
   public modalGerar: Modal;
   public modalEditar: Modal;
   public deletarModal: Modal;
+  public visualizarModal: Modal;
   public dataModal = null;
   public actual_page = 1;
   public per_page = 10;
   public editarInformacao: Informacao | undefined = undefined;
   public deletarInformacao: Informacao | undefined = undefined;
+  public visualizarInformacao: Informacao | undefined = undefined;
   public informacoes: Informacao[];
   public buscarInformacao: string = "";
   public sortBy: string[] = ["id", "asc"];
@@ -65,6 +67,16 @@ export class HomeComponent {
     this.deletarModal.display = false;
     this.deletarModal.loadingIcon = false;
     this.deletarModal.redirect = false;
+
+    this.visualizarModal = new Modal();
+    this.visualizarModal.title = "";
+    this.visualizarModal.description = "";
+    this.visualizarModal.canClose = true;
+    this.visualizarModal.showFooter = true;
+    this.visualizarModal.visibility = false;
+    this.visualizarModal.display = false;
+    this.visualizarModal.loadingIcon = false;
+    this.visualizarModal.redirect = false;
 
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
   }
@@ -168,6 +180,10 @@ export class HomeComponent {
     this.deletarInformacao = informacao;
     this.deletarModal.setVisibleModal(true);
   }
+  visualizarInformacaoModal(informacao: Informacao) {
+    this.visualizarInformacao = informacao;
+    this.visualizarModal.setVisibleModal(true);
+  }
 
   addInformation(data: string) {
     Informacao.create(data);
@@ -189,6 +205,18 @@ export class HomeComponent {
 
     this.deletarInformacao = undefined;
     this.informacoes = this.paginateData(this.per_page, this.actual_page);
+  }
+
+  visualizarInformacaoFunc(data: string) {
+    const response = data.split(':');
+
+    if (response[0] == "edit")
+      this.editarInformacaoModal(Informacao.findById(parseInt(response[1])) as Informacao)
+
+    if (response[0] == "delete")
+      this.deletarInformacaoModal(Informacao.findById(parseInt(response[1])) as Informacao)
+
+
   }
 
   buscarInformacaoFunc(event: KeyboardEvent) {

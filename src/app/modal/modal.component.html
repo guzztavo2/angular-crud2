@@ -125,6 +125,29 @@
 
     </section>
   </div>
+  <div *ngIf="this.modal_type == 'visualizar_informacao' && this.informacao !== undefined" class="container p-2 bg-light rounded shadow w-100 h-auto {{
+      this.modalVisibleClass
+    }}">
+    <header class="w-100 d-flex flex-row align-items-center justify-content-between border-bottom select-none p-2">
+      <h1 class="m-0 p-0 fw-light fs-4">Visualizando informação: {{this.informacao.getId()}}</h1>
+      <h1 *ngIf="canClose" class="close-modal fw-bold border border-danger text-danger px-2 py-1 rounded fs-4">
+        X
+      </h1>
+    </header>
+    <section class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-center my-2 p-2 text-center">
+
+      <input class="col-12 p-2 fs-5 border shadow-sm my-1" type="text" value="{{this.informacao.getName()}}" disabled>
+      <input class="col-12 p-2 fs-5 border shadow-sm my-1" type="text" value="{{this.informacao.getCreatedAt()}}"
+        disabled>
+      <input class="col-12 p-2 fs-5 border shadow-sm my-1" type="text" value="{{this.informacao.getUpdatedAt()}}"
+        disabled>
+      <input type="button" (click)="this.deleteInformation()" class="btn btn-outline-danger shadow-sm mx-1"
+        value="Deletar informação">
+      <input type="button" (click)="this.editInformation()" class="btn btn-outline-warning shadow-sm mx-1"
+        value="Editar informação">
+
+    </section>
+  </div>
 </div>
 
 <style>

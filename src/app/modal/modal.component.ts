@@ -80,6 +80,17 @@ export class ModalComponent implements OnInit {
     this.setModalVisibility(true);
   }
 
+  editInformation() {
+    this.data.emit("edit:" + this.informacao?.getId());
+    this.setModalVisibility(true);
+
+  }
+
+  deleteInformation() {
+    this.data.emit("delete:" + this.informacao?.getId());
+    this.setModalVisibility(true);
+
+  }
   onlyNonNumeric() {
     this.modalData = this.modalData.replace(/\D/g, '');
     if (Number.parseInt(this.modalData) > 100) {

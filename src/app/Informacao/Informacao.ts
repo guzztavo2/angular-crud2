@@ -221,7 +221,7 @@ export default class Informacao {
         localStorage.setItem("informacoes", JSON.stringify(informacoes));
     }
 
-    private static findById(id: number): Informacao | undefined {
+    public static findById(id: number): Informacao | undefined {
         return this.get_all().find((value: Informacao) => value.id == id)
     }
     public delete() {
